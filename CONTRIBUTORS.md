@@ -1,3 +1,4 @@
 - Apollo
 - gainsborouo (https://github.com/gainsborouo)
 - Chris
+- shangjung (https://github.com/shangjung1012)
