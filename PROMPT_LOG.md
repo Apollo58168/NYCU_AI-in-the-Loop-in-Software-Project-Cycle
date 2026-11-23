@@ -28,4 +28,4 @@
 - **What I retained:** All of it, after reading the diff and running `uv run pytest` (57 passed). To check that the tests can fail, I removed the author check and five tests failed.
 - **What I changed:** Passing `edits` is refused with a clear error for now, so nobody can change a card's text before module B's PR 2 adds "edit_approve". MOCK cards keep the same "MOCK draft, not AI" label in the Review tab as in the Draft tab.
 - **Human decision and reason:** The rule that the author cannot review their own card lives in `review()`, not only in the tab, so every future caller (export, PR 2 actions) gets it too.
-- **Repository result:** PR link below.
+- **Repository result:** [PR #11 — Review tab, approve or reject draft cards](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/11)
