@@ -28,4 +28,4 @@
 - **What I retained:** All of it, after reading the diff and running `uv run pytest` (27 passed). To check that the tests can fail, I removed the approved-only filter and three tests failed.
 - **What I changed:** Added stop words (question words and "decide"/"決定"), so a question like "What did we decide?" gets the fallback instead of matching any card that contains "we". On a tie the newer card wins, because a later decision may replace an earlier one.
 - **Human decision and reason:** Keyword overlap is enough for the walking skeleton; ranking up to three cards with cited quotes is planned for module C's second PR.
-- **Repository result:** PR to `walking-skeleton` (link added once opened)
+- **Repository result:** [PR #9 — Ask tab from approved cards](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/9)
