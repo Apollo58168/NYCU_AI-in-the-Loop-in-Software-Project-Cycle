@@ -29,3 +29,13 @@
 - **What I changed:** Added stop words (question words and "decide"/"決定"), so a question like "What did we decide?" gets the fallback instead of matching any card that contains "we". On a tie the newer card wins, because a later decision may replace an earlier one.
 - **Human decision and reason:** Keyword overlap is enough for the walking skeleton; ranking up to three cards with cited quotes is planned for module C's second PR.
 - **Repository result:** [PR #9 — Ask tab from approved cards](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/9)
+
+## 2026-11-23 — Draft tab with the mock drafter (module D)
+
+- **Tool and model:** Claude Code (Claude Opus 5.5)
+- **Prompt summary:** I gave Claude Code our team prompt for module D: implement `draft_card(source_text, author, source)` as a keyword-rule MOCK (decision and reason markers in English and Chinese, alternatives from "instead of" / "rather than" / "而不是", 8000-character limit, always `check_quote()`), plus the Draft tab and tests.
+- **Output:** `decisiontrace/drafter.py`, `app/tab_draft.py` and `tests/test_drafter.py` (15 tests, including three that drive the Draft tab with Streamlit's `AppTest`).
+- **What I retained:** All of it, after reading the diff and running the test suite (42 passed). To check that the tests can fail, I removed the truncation and the MOCK label; two tests failed.
+- **What I changed:** Nothing beyond the prompt. The tab also requires an author name, because module B's review must compare the reviewer with the author.
+- **Human decision and reason:** Keyword rules are enough to make the walking skeleton run end to end without an API key; the Claude drafter replaces them behind the same signature in module D's second PR.
+- **Repository result:** PR link added after the PR is opened.
