@@ -3,3 +3,12 @@
 *.log
 *.out
 .DS_Store
+
+# Python / uv
+.venv/
+__pycache__/
+.pytest_cache/
+
+# Local app data and secrets
+data/
+.env
