@@ -19,3 +19,13 @@
 - **What I changed:** The scope was limited to what the other three modules need to start in the walking skeleton session; no tab is built here.
 - **Human decision and reason:** The contract (fields, statuses, function signatures) follows our team's split plan, so that each module can be built in parallel in its own file.
 - **Repository result:** [PR #8 — Project setup and shared Card contract](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/8)
+
+## 2026-11-23 — Ask tab for the walking skeleton (module C)
+
+- **Tool and model:** Claude Code (Claude Opus 5.5)
+- **Prompt summary:** I gave Claude Code our team prompt for module C: implement `answer(question, cards)` from approved cards only, scored by keyword overlap (English words, Chinese character bigrams), returning exactly "No approved decision found." when nothing matches, plus the Ask tab and tests.
+- **Output:** `decisiontrace/ask.py`, `app/tab_ask.py` and `tests/test_ask.py` (17 tests, including three that drive the Ask tab with Streamlit's `AppTest`).
+- **What I retained:** All of it, after reading the diff and running `uv run pytest` (27 passed). To check that the tests can fail, I removed the approved-only filter and three tests failed.
+- **What I changed:** Added stop words (question words and "decide"/"決定"), so a question like "What did we decide?" gets the fallback instead of matching any card that contains "we". On a tie the newer card wins, because a later decision may replace an earlier one.
+- **Human decision and reason:** Keyword overlap is enough for the walking skeleton; ranking up to three cards with cited quotes is planned for module C's second PR.
+- **Repository result:** [PR #9 — Ask tab from approved cards](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/9)
