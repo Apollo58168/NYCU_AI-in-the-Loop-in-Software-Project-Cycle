@@ -29,3 +29,13 @@
 - **What I changed:** Passing `edits` is refused with a clear error for now, so nobody can change a card's text before module B's PR 2 adds "edit_approve". MOCK cards keep the same "MOCK draft, not AI" label in the Review tab as in the Draft tab.
 - **Human decision and reason:** The rule that the author cannot review their own card lives in `review()`, not only in the tab, so every future caller (export, PR 2 actions) gets it too.
 - **Repository result:** [PR #11 — Review tab, approve or reject draft cards](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/11)
+
+## 2026-11-23 — Approved cards tab for the walking skeleton (module A)
+
+- **Tool and model:** Claude Code (Claude Opus 5.5)
+- **Prompt summary:** I gave Claude Code our team prompt for module A's session piece: `approved_cards(cards)` (approved only, newest first), the Approved cards tab with an empty state, and tests.
+- **Output:** `decisiontrace/listing.py`, `app/tab_cards.py` and `tests/test_listing.py` (4 tests, two of them drive the tab with `AppTest`).
+- **What I retained:** All of it, after reading the diff and running `uv run pytest` (61 passed). To check that the tests can fail, I let non-draft cards through the filter and two tests failed. I also ran the whole path once (draft as Alice, approve as Bob, ask, then the Approved cards tab).
+- **What I changed:** MOCK cards are labelled "MOCK (not AI)" here too, like in the Draft and Review tabs.
+- **Human decision and reason:** "Newest" uses the card's `created_at` (when it was drafted), because cards do not store a review time until module B's PR 2.
+- **Repository result:** PR `a-cards` (link added after the PR is opened)
