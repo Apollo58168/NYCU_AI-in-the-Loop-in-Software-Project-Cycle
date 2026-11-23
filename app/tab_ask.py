@@ -1,4 +1,11 @@
-"""Ask tab (module C): answer a question from approved cards only."""
+"""Ask tab (module C): answer a question from approved cards only.
+
+Streamlit (chosen for the whole app in PR #8) reruns this file from the top on
+every interaction. So there is no click handler: st.button() returns True only
+on the rerun right after the click, and the early return below means nothing
+is answered until then. Cards are loaded on that rerun, so an answer always
+uses what is saved at that moment, including cards approved in the Review tab.
+"""
 
 import streamlit as st
 
