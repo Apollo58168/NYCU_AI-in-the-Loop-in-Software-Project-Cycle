@@ -18,7 +18,7 @@
 - Module C PR 2 (sources and ranking, Q&A tests, sample data, demo steps), the design rationale and user tests, and the 11/24–25 steward turn go to 周廷威.
 - Steward reviews swap with the roles: 周廷威 reviews module B's PRs, and 蔡尚融 reviews module D's PR 2.
 
-**Why:** Proposed by 林彥宇 after the walking-skeleton session. The plan allowed swapping the drawn assignments.  
+**Why:** 周廷威 had already done two pieces of module A (#8 setup before the session and #12 in it), while 蔡尚融's module C still had its larger PR 2 ahead. Swapping the remaining work evens out the load between the two before the 11/29 CP2 deadline. Proposed by 林彥宇 after the walking-skeleton session.  
 **Led by:** 林彥宇
 
 ## 2026-11-23 — Steward handover: 林彥宇 → 周廷威
