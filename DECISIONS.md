@@ -13,8 +13,8 @@
 **Led by:** 周廷威 (CP1 draft); accepted by the team through the review of the CP1 PR
 
 ## 2026-11-23 — 周廷威 and 蔡尚融 swap their remaining work
-**What:** 周廷威 and 蔡尚融 swap every assignment still open in our prototype split plan. Work already merged keeps its author: #8 project setup (周廷威) and #9 Ask tab (蔡尚融).
-- Module A (prompt test suite, README) and the 11/27 merge-day steward turn go to 蔡尚融.
+**What:** 周廷威 and 蔡尚融 swap every assignment still open in our prototype split plan. Work already merged keeps its author: #8 project setup (周廷威), #9 Ask tab (蔡尚融) and #12 Approved cards tab (周廷威).
+- Module A's PR 2 (prompt test suite) and the 11/27 merge-day steward turn go to 蔡尚融.
 - Module C PR 2 (sources and ranking, Q&A tests, sample data, demo steps), the design rationale and user tests, and the 11/24–25 steward turn go to 周廷威.
 - Steward reviews swap with the roles: 周廷威 reviews module B's PRs, and 蔡尚融 reviews module D's PR 2.
 
