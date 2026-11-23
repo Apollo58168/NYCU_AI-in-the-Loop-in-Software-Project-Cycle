@@ -38,4 +38,4 @@
 - **What I retained:** All of it, after reading the diff and running the test suite (42 passed). To check that the tests can fail, I removed the truncation and the MOCK label; two tests failed.
 - **What I changed:** Nothing beyond the prompt. The tab also requires an author name, because module B's review must compare the reviewer with the author.
 - **Human decision and reason:** Keyword rules are enough to make the walking skeleton run end to end without an API key; the Claude drafter replaces them behind the same signature in module D's second PR.
-- **Repository result:** PR link added after the PR is opened.
+- **Repository result:** [PR #10 — Draft tab with a MOCK drafter](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/10)
