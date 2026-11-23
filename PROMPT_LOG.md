@@ -18,4 +18,4 @@
 - **What I retained:** All of it, after reading the diff and running `uv run pytest` and the app locally.
 - **What I changed:** The scope was limited to what the other three modules need to start in the walking skeleton session; no tab is built here.
 - **Human decision and reason:** The contract (fields, statuses, function signatures) follows our team's split plan, so that each module can be built in parallel in its own file.
-- **Repository result:** PR `a-setup` (link added after the PR is opened)
+- **Repository result:** [PR #8 — Project setup and shared Card contract](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/8)
