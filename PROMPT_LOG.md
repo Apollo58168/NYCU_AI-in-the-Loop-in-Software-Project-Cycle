@@ -58,7 +58,7 @@
 - **What I retained:** All of it, after reading the diff and running `uv run pytest` (77 passed).
 - **What I changed:** The table-driven set first failed on "Did we switch to server-sent events?": the rejected SSE card was correctly skipped, but the SQLite card was cited only because its reason mentions a database "server". I added a rule that a card must share at least a third of the question's keywords, and kept the case in the table.
 - **Human decision and reason:** "Load sample data" replaces the saved cards and "Reset data" needs a confirmation tick, so a user-testing session always starts from the same known state without deleting cards by accident.
-- **Repository result:** PR `c-ask-sources` (link added after the PR is opened)
+- **Repository result:** [PR #29 — Cited ranked answers and sample data](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/29)
 
 ## 2026-11-25 — Review guards and next-step messages (module B, PR 2)
 
