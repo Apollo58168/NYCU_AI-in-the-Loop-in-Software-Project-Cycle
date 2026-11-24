@@ -78,6 +78,7 @@ E5 and E6 were new: the 15 existing drafter tests and Group 11's review did not 
 
 - After #17 merges: E1 and E2 should pass; remove their `known_failure` notes (strict xfail will say so) and save run 3.
 - After #21 connects Claude: run the suite with the Claude drafter and an API key, save the table, and record any failure → prompt change → re-run here. T3 is expected to pass there.
+- `pytest` runs only the MOCK. The Claude drafter is run with the CLI (`--drafter`), because it needs an API key, costs money and can answer differently each run. `known_failure` is keyed by drafter (`mock` today), so if Claude is ever added to `pytest` it gets its own `known_failure.claude` list instead of reusing the MOCK's.
 
 ## What this suite does not cover yet
 
