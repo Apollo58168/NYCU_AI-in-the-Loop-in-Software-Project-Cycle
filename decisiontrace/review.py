@@ -6,7 +6,7 @@ its author approves it here. This is plain code, no AI.
 
 from __future__ import annotations
 
-from .cards import Card
+from .cards import UNKNOWN, Card
 
 # action -> the status the card gets
 _ACTIONS = {"approve": "approved", "reject": "rejected"}
@@ -29,6 +29,9 @@ def review(card: Card, reviewer: str, action: str, edits: dict | None = None) ->
     if edits:
         # shortcut: edits arrive with "edit_approve" in module B's PR 2.
         raise ValueError("Editing a card during review is not supported yet.")
+
+    if action == "approve" and card.decision.strip() in ("", UNKNOWN):
+        raise ValueError("This card has no decision, so it cannot be approved. Reject it instead.")
 
     card.status = _ACTIONS[action]
     card.reviewer = reviewer

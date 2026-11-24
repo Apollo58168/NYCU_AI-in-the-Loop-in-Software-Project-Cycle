@@ -69,5 +69,11 @@ def render() -> None:
             except Exception as exc:  # a failed save must not crash the page
                 st.error(f"Could not save the card: {exc}")
             else:
-                st.session_state["review_done"] = f"Card {card.id} {card.status} by {card.reviewer}."
+                message = f"Card {card.id} {card.status} by {card.reviewer}."
+                if card.status == "rejected":
+                    message += (
+                        " To fix it, the author pastes the corrected discussion in the Draft tab, "
+                        "saves a new draft, and asks another teammate to review it."
+                    )
+                st.session_state["review_done"] = message
                 st.rerun()

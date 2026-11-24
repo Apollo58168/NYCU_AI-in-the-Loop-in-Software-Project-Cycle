@@ -39,3 +39,13 @@
 - **What I changed:** MOCK cards are labelled "MOCK (not AI)" here too, like in the Draft and Review tabs.
 - **Human decision and reason:** "Newest" uses the card's `created_at` (when it was drafted), because cards do not store a review time until module B's PR 2.
 - **Repository result:** [PR #12 — Approved cards tab](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/12)
+
+## 2026-11-25 — Review guards and next-step messages (module B, PR 2)
+
+- **Tool and model:** Claude Code (Claude Opus 5.5)
+- **Prompt summary:** I asked Claude Code to fix issues #18 and #19 from Group 11's review (#16): a card with no decision must not be saved or approved, and the Draft and Review tabs must tell the user the next step after Save and after Reject. Tests come from Group 11's inputs.
+- **Output:** changes to `decisiontrace/review.py`, `decisiontrace/drafter.py`, `app/tab_draft.py`, `app/tab_review.py`; 5 new tests in `tests/test_review.py` and `tests/test_drafter.py`, and 2 updated drafter tests.
+- **What I retained:** All of it, after reading the diff and running `uv run pytest` (66 passed). To check that the tests can fail, I broke each change once. Removing the approve guard, the Draft Save guard, or the Reject hint each made 1 test fail.
+- **What I changed:** The no-decision card now uses `decision = UNKNOWN` with the old text as a warning, so `review()` checks a value, not an error string. It does not change the shared `Card` contract.
+- **Human decision and reason:** The guard lives in `review()` as well as the Draft tab, so a no-decision card that is already saved (or arrives from another caller) still cannot be approved.
+- **Repository result:** see the PR for #18 and #19.
