@@ -56,6 +56,23 @@ def test_markers_are_case_insensitive():
     assert card.reason == "Since the demo is Monday."
 
 
+@pytest.mark.parametrize(
+    "text",
+    [
+        "We are still undecided about the database because nobody has benchmarked it.",
+        "I disagreed with switching to Rust because the deadline is close.",
+    ],
+)
+def test_markers_inside_other_words_are_not_decisions(text):
+    assert draft_card(text, "alice").decision == NO_DECISION
+
+
+def test_whole_word_markers_still_match_next_to_punctuation():
+    card = draft_card("Decided: we'll use uv, since it is fast.", "alice")
+    assert card.decision == "Decided: we'll use uv, since it is fast."
+    assert card.reason == card.decision
+
+
 def test_no_decision_found():
     card = draft_card("Has anyone seen the lab slides? I can't find them.", "alice")
     assert card.decision == NO_DECISION
