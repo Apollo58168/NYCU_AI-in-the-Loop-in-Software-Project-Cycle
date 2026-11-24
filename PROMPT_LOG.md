@@ -50,6 +50,16 @@
 - **Human decision and reason:** Run 1 found that "undecided" and "disagreed" were drafted as decisions. I fixed that in the MOCK even though Claude will replace it, because #21 keeps the MOCK whenever no API key is set, which is how a fresh clone runs.
 - **Repository result:** this PR (module A PR 2).
 
+## 2026-11-24 — Cited answers and sample data (module C, PR 2)
+
+- **Tool and model:** Claude Code (Claude Opus 5.5)
+- **Prompt summary:** I gave Claude Code our team prompt for module C's PR 2: answer from up to three ranked approved cards and cite each by id and quote, keep "unknown" reasons as "unknown", add a table-driven set of at least eight questions, add fixed sample data with "Load sample data" and "Reset data" controls, and add a five-step demo to the README.
+- **Output:** `decisiontrace/ask.py` (`rank()` and cited answers), `app/tab_ask.py`, `decisiontrace/sample_data.py`, `app/sidebar.py` (plus one call in `app/main.py`), `tests/test_ask_cases.py` (14 tests), `tests/test_sidebar.py` (2 tests) and the README demo section.
+- **What I retained:** All of it, after reading the diff and running `uv run pytest` (77 passed).
+- **What I changed:** The table-driven set first failed on "Did we switch to server-sent events?": the rejected SSE card was correctly skipped, but the SQLite card was cited only because its reason mentions a database "server". I added a rule that a card must share at least a third of the question's keywords, and kept the case in the table.
+- **Human decision and reason:** "Load sample data" replaces the saved cards and "Reset data" needs a confirmation tick, so a user-testing session always starts from the same known state without deleting cards by accident.
+- **Repository result:** PR `c-ask-sources` (link added after the PR is opened)
+
 ## 2026-11-25 — Review guards and next-step messages (module B, PR 2)
 
 - **Tool and model:** Claude Code (Claude Opus 5.5)
