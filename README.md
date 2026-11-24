@@ -3,6 +3,7 @@
 - [AI Usage Guidelines](AI_GUIDELINES.md)
 - [Evaluation Plan](EVALUATION_PLAN.md)
 - [Prompt Engineering Log](PROMPT_LOG.md)
+- [Prompt Test Suite](docs/prompt_test_suite.md)
 
 ## Run the prototype
 
@@ -44,3 +45,4 @@ Cards are stored in `data/cards.json`, which is not committed. Delete that file 
 | `app/tab_review.py` | Review tab | B |
 | `app/tab_ask.py` | Ask tab | C |
 | `app/tab_cards.py` | Approved cards tab | A |
+| `decisiontrace/prompt_suite.py`, `tests/prompt_suite/cases.json` | Prompt test suite for the drafter (`uv run python -m decisiontrace.prompt_suite`) | A |
