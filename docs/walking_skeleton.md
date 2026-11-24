@@ -15,7 +15,7 @@ Present: 周廷威, 林彥宇, 蔡凱旭, 蔡尚融 (all four opened and merged 
 | 周廷威 | TODO (team) |
 | 林彥宇 | TODO (team) |
 | 蔡凱旭 | TODO (team) |
-| 蔡尚融 | TODO (team) |
+| 蔡尚融 | Our tool helps team members to keep a trusted record of decisions by letting AI draft a card from a discussion and requiring someone else to approve it. |
 | **Agreed sentence** (written down on 11/25; TODO (team): confirm or replace with the one we said) | Our tool helps **student software teams** to **find out later why they made a decision** by **drafting decision cards from pasted discussions, which a teammate must approve before Ask answers from them**. (The app header says it shorter: "Draft decision cards from team discussions; a teammate reviews every card.") |
 
 **Did all four sentences match?** TODO (team)
@@ -56,7 +56,7 @@ Each piece was opened as its own PR into `walking-skeleton` and merged by a team
 
 | Piece | Built by | Merged into `walking-skeleton` (by) | Explained by | Connected? | What came up at the connection |
 |---|---|---|---|---|---|
-| Ask (#9) | 蔡尚融 | 21:07 (蔡凱旭) | TODO (team) | yes | 蔡凱旭 asked why we use Streamlit. 蔡尚融 answered that it is the stack from #8 and added a docstring on how Streamlit reruns the tab (9776a10). |
+| Ask (#9) | 蔡尚融 | 21:07 (蔡凱旭) | 林彥宇, on the shared screen | yes | 蔡凱旭 asked why we use Streamlit. 蔡尚融 answered that it is the stack from #8 and added a docstring on how Streamlit reruns the tab (9776a10). |
 | Draft (#10) | 蔡凱旭 | 21:24 (林彥宇) | TODO (team) | with a fix later | Commit 37d14fa removed the PROMPT_LOG entries for #9 and #10 while fixing a conflict. Found in the #13 review and tracked in #14. |
 | Review (#11) | 林彥宇 | 21:35 (周廷威) | TODO (team) | yes | 周廷威 noted that the reviewer name is free text, so an author could approve their own card under a different spelling. Kept as a known limitation. |
 | Approved cards (#12) | 周廷威 | 21:41 (林彥宇) | TODO (team) | yes | none |
@@ -84,23 +84,33 @@ Each piece was opened as its own PR into `walking-skeleton` and merged by a team
 
 ## Part 5 | Team check
 
-Facts from the PR history are already filled in. The answers themselves are **TODO (team)**.
+Answers so far are 蔡尚融's. The other three add their own view under each one (**TODO (team)**), or write "agree".
 
 1. **What worked well in how we worked together today?**
 
-   > TODO (team). From the history: all four built and merged a piece within an hour, and the shared contract from #8 meant no piece had to change its hand-off when it was connected.
+   > 蔡尚融: All four of us built and merged our own piece within about an hour. Because #8 fixed the `Card` contract and the function signatures first, no piece had to change its hand-off when it was connected.
+   >
+   > TODO (team): others
 
 2. **What was hard or awkward?**
 
-   > TODO (team). From the history: #9, #10 and #11 were merged without a recorded approval, and #10 and #12 got only "LGTM". The PROMPT_LOG conflict removed two entries without anyone noticing until the #13 review.
+   > 蔡尚融: We merged too fast to review properly. #9–#11 went in without an approval, and I left only "LGTM" on #10 without reading it closely. A PROMPT_LOG conflict silently removed two entries, and nobody noticed until the steward reviewed #13.
+   >
+   > TODO (team): others
 
 3. **Who had the least chance to contribute, and what would help next time?**
 
-   > TODO (team)
+   > 蔡尚融: It was fairly even: each person owned one tab. The weakest part was review, not building. Reviewers had little time, so comments were short.
+   >
+   > TODO (team): others
 
 4. **What is the one thing we will do differently in the next team session (merge day)?**
 
-   > TODO (team). Already decided after the session: every PR needs a steward approval with a substantive comment before it is merged (DECISIONS.md, 2026-11-23 handover, and the AI_GUIDELINES rules from 2026-11-24).
+   > 蔡尚融: No PR is merged without a steward approval that has a real comment (a question, or a specific file, line or case). Conflicts are read aloud by the driver before resolving.
+   >
+   > The first half was already written down after the session (DECISIONS.md, 2026-11-23 handover; AI_GUIDELINES rules from 2026-11-24).
+   >
+   > TODO (team): others
 
 5. **Blockers we found, and who follows up:**
 
@@ -113,7 +123,7 @@ Facts from the PR history are already filled in. The answers themselves are **TO
 ## Quick checklist
 
 - [x] All four of us were present for the session
-- [ ] All four of us built a piece, and each piece was explained by someone who did not write it: built yes; "explained by" not recorded (TODO in Part 3)
+- [ ] All four of us built a piece, and each piece was explained by someone who did not write it: built yes; "explained by" filled in for Ask so far (TODO in Part 3 for the other three)
 - [x] We have one agreed sentence about what the tool does (written down afterwards; the team confirms it)
 - [x] The pieces connected and something ran from input to output, with the drafter faked
 - [x] The PR was reviewed by the steward with at least one real comment, and merged (#13)
