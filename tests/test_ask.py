@@ -72,10 +72,10 @@ def test_empty_question_raises(question):
         answer(question, [POLLING])
 
 
-def test_tie_goes_to_newer_card():
+def test_tie_lists_newer_card_first():
     old = make_card("Use polling", "simple", created_at="2026-11-01T00:00:00+00:00")
     new = make_card("Stop polling, use SSE", "polling was slow", created_at="2026-11-20T00:00:00+00:00")
-    assert answer("polling", [old, new]).card_ids == [new.id]
+    assert answer("polling", [old, new]).card_ids == [new.id, old.id]
 
 
 def test_unknown_reason_is_shown_as_unknown():

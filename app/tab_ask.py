@@ -33,12 +33,21 @@ def render() -> None:
         st.error(str(exc))
         return
 
-    st.markdown(result.text)
+    if not result.card_ids:
+        st.info(result.text)
+        return
+
+    count = len(result.card_ids)
+    st.markdown(
+        f"Found {count} approved decision{'s' if count > 1 else ''} that "
+        f"match{'' if count > 1 else 'es'} the question, best match first. "
+        "Check each one against its quote."
+    )
     by_id = {c.id: c for c in cards}
-    for card_id in result.card_ids:
+    for number, card_id in enumerate(result.card_ids, start=1):
         card = by_id[card_id]
         with st.container(border=True):
-            st.markdown("**Source card**")
+            st.markdown(f"**Source card {number}** · `{card.id}`")
             st.markdown(f"**Decision:** {card.decision}")
             st.markdown(f"**Reason:** {card.reason}")
             st.markdown(f"**Quote:** {card.verbatim_quote}")
