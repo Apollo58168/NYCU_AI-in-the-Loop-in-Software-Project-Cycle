@@ -31,3 +31,15 @@
 - #9, #10 and #11 were merged into `walking-skeleton` without a recorded approval. From now on, every PR needs a steward approval with a substantive comment before it is merged.
 
 **Next handover:** 周廷威 → 蔡凱旭 on 11/26.
+
+## 2026-11-24 — Three AI usage rules become checkable from a PR
+**What:** Three rules in `AI_GUIDELINES.md` now name what a teammate can see in a PR:
+- the "AI assistance" section lists the tool and model, the generated files, the instruction and what the author changed;
+- every merge needs a non-author approval with a comment that asks a question or names a file, line or case, and "LGTM" does not count;
+- AI-written code shows one deliberate break with the number of failing tests, plus one input tried by hand in the app.
+
+**Why:** In our last seven PRs (#8–#13, #15), all were mostly AI-generated. Only #9 and #10 named the files the AI wrote. #9–#11 were merged without an approval, and #10 and #12 got only "LGTM". Group 11's review (#16) found three drafter bugs (F1–F3) that the 15 drafter tests did not catch.
+
+**Alternative rejected:** Keeping the Week 3 wording ("states whether AI was used", "a teammate can explain the result"), which every one of those PRs already met on paper.
+
+**Led by:** 林彥宇 (proposed in this PR); accepted through the steward's review.
