@@ -16,7 +16,7 @@ Present: 周廷威, 林彥宇, 蔡凱旭, 蔡尚融 (all four opened and merged 
 | 林彥宇 | TODO (team) |
 | 蔡凱旭 | TODO (team) |
 | 蔡尚融 | Our tool helps team members to keep a trusted record of decisions by letting AI draft a card from a discussion and requiring someone else to approve it. |
-| **Agreed sentence** (written down on 11/25; TODO (team): confirm or replace with the one we said) | Our tool helps **student software teams** to **find out later why they made a decision** by **drafting decision cards from pasted discussions, which a teammate must approve before Ask answers from them**. (The app header says it shorter: "Draft decision cards from team discussions; a teammate reviews every card.") |
+| **Agreed sentence** (written down on 11/25, closest to what we said; TODO (team): confirm) | Our tool helps **team members** to **keep a trusted record of decisions** by **letting AI draft a card from a discussion and requiring someone else to approve it**. |
 
 **Did all four sentences match?** TODO (team)
 
