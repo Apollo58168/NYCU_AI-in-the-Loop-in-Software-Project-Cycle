@@ -2,6 +2,7 @@ import pytest
 from streamlit.testing.v1 import AppTest
 
 from decisiontrace import store
+from decisiontrace.prompt_suite import is_no_decision
 from decisiontrace.cards import UNKNOWN
 from decisiontrace.drafter import MAX_CHARS, MOCK, NO_DECISION, draft_card, split_sentences
 
@@ -64,7 +65,9 @@ def test_markers_are_case_insensitive():
     ],
 )
 def test_markers_inside_other_words_are_not_decisions(text):
-    assert draft_card(text, "alice").decision == NO_DECISION
+    # is_no_decision, not the exact NO_DECISION text: #18 changes how a
+    # no-decision card looks, and the Claude drafter (#21) may differ again.
+    assert is_no_decision(draft_card(text, "alice"))
 
 
 def test_whole_word_markers_still_match_next_to_punctuation():
