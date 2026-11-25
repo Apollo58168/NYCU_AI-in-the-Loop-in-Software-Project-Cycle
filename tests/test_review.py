@@ -3,7 +3,7 @@ from streamlit.testing.v1 import AppTest
 
 from decisiontrace import store
 from decisiontrace.cards import UNKNOWN, Card
-from decisiontrace.drafter import draft_card
+from decisiontrace.drafter import NO_DECISION, draft_card
 from decisiontrace.review import review
 
 
@@ -85,6 +85,14 @@ def test_card_without_a_decision_cannot_be_approved_but_can_be_rejected():
         review(card, "Bob", "approve")
     assert card.status == "draft"
     assert review(card, "Bob", "reject").status == "rejected"
+
+
+def test_card_saved_before_the_fix_with_the_old_no_decision_text_cannot_be_approved():
+    # Cards in an existing data/cards.json still carry the old text as their decision.
+    card = _card()
+    card.decision = NO_DECISION
+    with pytest.raises(ValueError, match="no decision"):
+        review(card, "Bob", "approve")
 
 
 def test_tab_reject_message_says_how_to_fix(tmp_path, monkeypatch):
