@@ -13,12 +13,12 @@ Present: 周廷威, 林彥宇, 蔡凱旭, 蔡尚融 (all four opened and merged 
 | | Sentence |
 |---|---|
 | 周廷威 | Our tool helps a project team to remember why decisions were made by turning discussions into AI-drafted decision cards that a teammate must approve before anyone can rely on them. |
-| 林彥宇 | TODO (team) |
+| 林彥宇 | (11/23 wording not recorded; written on 11/25) Our tool helps a team to trust its decision log by having AI draft each decision card from the discussion, with quotes, and letting it count only after a teammate other than the author approves it. |
 | 蔡凱旭 | TODO (team) |
 | 蔡尚融 | Our tool helps team members to keep a trusted record of decisions by letting AI draft a card from a discussion and requiring someone else to approve it. |
-| **Agreed sentence** (written down on 11/25, closest to what we said; TODO (team): confirm) | Our tool helps **team members** to **keep a trusted record of decisions** by **letting AI draft a card from a discussion and requiring someone else to approve it**. |
+| **Agreed sentence** (written down on 11/25, closest to what we said; confirmed by 周廷威, 林彥宇; TODO (team): 蔡凱旭) | Our tool helps **team members** to **keep a trusted record of decisions** by **letting AI draft a card from a discussion and requiring someone else to approve it**. |
 
-**Did all four sentences match?** 周廷威: mine matches the agreed sentence; only the wording differs. TODO (team): others
+**Did all four sentences match?** 周廷威: mine matches the agreed sentence; only the wording differs. 林彥宇: matches; mine adds the quotes, which are how a reviewer checks the reasons. TODO (team): 蔡凱旭
 
 ---
 
@@ -57,8 +57,8 @@ Each piece was opened as its own PR into `walking-skeleton` and merged by a team
 | Piece | Built by | Merged into `walking-skeleton` (by) | Explained by | Connected? | What came up at the connection |
 |---|---|---|---|---|---|
 | Ask (#9) | 蔡尚融 | 21:07 (蔡凱旭) | 林彥宇, on the shared screen | yes | 蔡凱旭 asked why we use Streamlit. 蔡尚融 answered that it is the stack from #8 and added a docstring on how Streamlit reruns the tab (9776a10). |
-| Draft (#10) | 蔡凱旭 | 21:24 (林彥宇) | TODO (team) | with a fix later | Commit 37d14fa removed the PROMPT_LOG entries for #9 and #10 while fixing a conflict. Found in the #13 review and tracked in #14. |
-| Review (#11) | 林彥宇 | 21:35 (周廷威) | TODO (team) | yes | 周廷威 noted that the reviewer name is free text, so an author could approve their own card under a different spelling. Kept as a known limitation. |
+| Draft (#10) | 蔡凱旭 | 21:24 (林彥宇) | not recorded (only "LGTM" from 蔡尚融 and 林彥宇) | with a fix later | Commit 37d14fa removed the PROMPT_LOG entries for #9 and #10 while fixing a conflict. Found in the #13 review and tracked in #14. |
+| Review (#11) | 林彥宇 | 21:35 (周廷威) | not recorded (周廷威 ran the tests and left the free-text note) | yes | 周廷威 noted that the reviewer name is free text, so an author could approve their own card under a different spelling. Kept as a known limitation. |
 | Approved cards (#12) | 周廷威 | 21:41 (林彥宇) | not recorded (connected last, right before #13) | yes | none |
 
 **Where did it first run end to end?** 21:41, after #12 was merged. The steward then reran it on screen for #13: Alice drafts, Alice's own approve is refused, Bob approves, Ask answers from the card, and Approved cards lists it. 61 tests passed.
@@ -84,7 +84,7 @@ Each piece was opened as its own PR into `walking-skeleton` and merged by a team
 
 ## Part 5 | Team check
 
-Answers so far are 蔡尚融's. The other three add their own view under each one (**TODO (team)**), or write "agree".
+Answers so far are 蔡尚融's. The others add their own view under each one (**TODO (team)**), or write "agree".
 
 1. **What worked well in how we worked together today?**
 
@@ -92,7 +92,9 @@ Answers so far are 蔡尚融's. The other three add their own view under each on
    >
    > 周廷威: Agree. Because the `Card` contract and function signatures were fixed in #8 before the session, all four tabs could be built in parallel and none of them changed its hand-off when connected.
    >
-   > TODO (team): others
+   > 林彥宇: Agree. The fixed contract in #8 also meant each of us could run `uv run pytest` on our own branch before connecting, so a piece could be tested alone before it was connected.
+   >
+   > TODO (team): 蔡凱旭
 
 2. **What was hard or awkward?**
 
@@ -100,7 +102,9 @@ Answers so far are 蔡尚融's. The other three add their own view under each on
    >
    > 周廷威: The end of the session was rushed. #12 was the last piece and went in two minutes after it was opened, with only "LGTM". I opened the setup (#8), the last piece (#12) and the integration PR (#13), so the start and the end of the integration both sat on one person.
    >
-   > TODO (team): others
+   > 林彥宇: Agree. My own reviews were part of it: I merged #10 less than nine minutes after it was opened with only "LGTM", approved #12 with "LGTM", and answered 周廷威's real note on #11 with "ok". The first substantive review I wrote was on #13, at the very end, which is too late to change anything.
+   >
+   > TODO (team): 蔡凱旭
 
 3. **Who had the least chance to contribute, and what would help next time?**
 
@@ -108,7 +112,9 @@ Answers so far are 蔡尚融's. The other three add their own view under each on
    >
    > 周廷威: Building was even, one tab each, and merging into `walking-skeleton` rotated. But the setup and the final integration PR both came from me, so the others had less chance to drive the integration. Next time setup and final integration go to different people, and we rotate who drives while connecting.
    >
-   > TODO (team): others
+   > 林彥宇: Building was even. Reviewing was not: the person merging was usually the only one who read the code, and only briefly. Next time each PR gets a named reviewer before it is opened, so the review is not left to whoever is free at the end.
+   >
+   > TODO (team): 蔡凱旭
 
 4. **What is the one thing we will do differently in the next team session (merge day)?**
 
@@ -118,7 +124,9 @@ Answers so far are 蔡尚融's. The other three add their own view under each on
    >
    > 周廷威: Agree with the steward-approval rule. I'd add: the last piece still gets explained by a non-author before it is connected, even when we are short on time, and setup and final integration go to different people.
    >
-   > TODO (team): others
+   > 林彥宇: Agree with the steward-approval rule. I'd add: if the steward finds a problem, it is fixed before the merge, or the merge is stopped. On #13 I found the missing PROMPT_LOG entries and still merged, with the fix moved to #14.
+   >
+   > TODO (team): 蔡凱旭
 
 5. **Blockers we found, and who follows up:**
 
@@ -131,7 +139,7 @@ Answers so far are 蔡尚融's. The other three add their own view under each on
 ## Quick checklist
 
 - [x] All four of us were present for the session
-- [ ] All four of us built a piece, and each piece was explained by someone who did not write it: built yes; "explained by" filled in for Ask so far (TODO in Part 3 for the other three)
+- [ ] All four of us built a piece, and each piece was explained by someone who did not write it: built yes; "explained by" is recorded only for Ask (林彥宇); not recorded for Draft, Review and Approved cards
 - [x] We have one agreed sentence about what the tool does (written down afterwards; the team confirms it)
 - [x] The pieces connected and something ran from input to output, with the drafter faked
 - [x] The PR was reviewed by the steward with at least one real comment, and merged (#13)
