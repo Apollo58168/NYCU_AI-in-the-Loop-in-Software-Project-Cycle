@@ -54,6 +54,6 @@ def render() -> None:
             if card.alternatives:
                 st.markdown(f"**Alternatives:** {', '.join(card.alternatives)}")
             st.caption(
-                f"Card {card.id} · written by {card.author} · "
+                f"Card {card.id} · written by {card.author} on {card.created_at[:10]} · "
                 f"drafted by {card.drafted_by} · approved by {card.reviewer}"
             )

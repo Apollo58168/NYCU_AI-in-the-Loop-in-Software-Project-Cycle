@@ -88,7 +88,7 @@ def rank(question: str, cards: list[Card]) -> list[Card]:
 
 def _cite(card: Card) -> str:
     return (
-        f"[{card.id}] {card.decision}\n"
+        f"[{card.id}] {card.decision} (drafted {card.created_at[:10]})\n"
         f"Reason: {card.reason}\n"
         f'Quote: "{card.verbatim_quote}"'
     )

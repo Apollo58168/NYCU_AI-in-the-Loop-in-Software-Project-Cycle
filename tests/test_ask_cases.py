@@ -66,3 +66,11 @@ def test_one_shared_word_does_not_pull_in_a_weak_match():
     # s-sqlite shares only "data" and must not be cited.
     result = answer("polling live board data", sample_cards())
     assert result.card_ids == ["s-poll"]
+
+
+def test_cited_cards_show_when_they_were_drafted():
+    # Two approved cards can match the same question when one replaced the
+    # other; the date lets the reader see which one is newer.
+    result = answer("Why do we use polling?", sample_cards())
+    assert "[s-poll] Use polling every 10 seconds for the live board (drafted 2026-10-02)" in result.text
+
