@@ -22,9 +22,9 @@ None of the five CP1 pass/fail criteria has been tested yet. The prototype runs 
 
 **Cross-team review by Group 11 (#16, 2026-11-24).** This is our first look from outside the team. They ran the app from the README and tried to make the drafter fail:
 - **Unsupported reasons (criterion 5).** With two decisions in one text, the Reason and Quote came from the other decision. A lunch sentence was given as the reason for choosing PostgreSQL (F1). The quote was verbatim, so `check_quote` passed, but it did not support the decision. **A verbatim quote is not enough to meet criterion 5.** Tracked in #17.
-- **No-decision cards could be approved (F2).** Chit-chat produced a card that a reviewer could approve into the decision log. Fixed in #26 (#18): such a card cannot be saved or approved.
+- **No-decision cards could be approved (F2).** Chit-chat produced a card that a reviewer could approve into the decision log. Fix in #26 (open, #18): such a card cannot be saved or approved.
 - **Alternatives included the reason text (F3).** Not fixed in the MOCK. The sentence is a prompt-suite case.
-- **Next step unclear after Reject (F4).** Fixed in #26 (#19).
+- **Next step unclear after Reject (F4).** Fix in #26 (open, #19).
 - **What held:** a card's author could not approve it, rejected cards never reached Ask, and the MOCK label was visible in every tab.
 
 **Prompt test suite (module A PR 2, #25, open).** 15 cases, run against the MOCK: 10/15 on the first run, 12/15 after fixing marker matching. The 3 that still fail are F1 ×2 (#17) and F3. The cases check key words and rules rather than exact text, so the same suite will run against the Claude drafter from #21.
