@@ -14,11 +14,11 @@ Present: 周廷威, 林彥宇, 蔡凱旭, 蔡尚融 (all four opened and merged 
 |---|---|
 | 周廷威 | Our tool helps a project team to remember why decisions were made by turning discussions into AI-drafted decision cards that a teammate must approve before anyone can rely on them. |
 | 林彥宇 | (11/23 wording not recorded; written on 11/25) Our tool helps a team to trust its decision log by having AI draft each decision card from the discussion, with quotes, and letting it count only after a teammate other than the author approves it. |
-| 蔡凱旭 | TODO (team) |
+| 蔡凱旭 | (11/23 wording not recorded; written on 11/25) Our tool helps a team to find out later why a decision was made by having AI draft a decision card, with a verbatim quote, that a different teammate must approve. |
 | 蔡尚融 | Our tool helps team members to keep a trusted record of decisions by letting AI draft a card from a discussion and requiring someone else to approve it. |
-| **Agreed sentence** (written down on 11/25, closest to what we said; confirmed by 周廷威, 林彥宇; TODO (team): 蔡凱旭) | Our tool helps **team members** to **keep a trusted record of decisions** by **letting AI draft a card from a discussion and requiring someone else to approve it**. |
+| **Agreed sentence** (written down on 11/25, closest to what we said; confirmed by 周廷威, 林彥宇, 蔡凱旭) | Our tool helps **team members** to **keep a trusted record of decisions** by **letting AI draft a card from a discussion and requiring someone else to approve it**. |
 
-**Did all four sentences match?** 周廷威: mine matches the agreed sentence; only the wording differs. 林彥宇: matches; mine adds the quotes, which are how a reviewer checks the reasons. TODO (team): 蔡凱旭
+**Did all four sentences match?** 周廷威: mine matches the agreed sentence; only the wording differs. 林彥宇: matches; mine adds the quotes, which are how a reviewer checks the reasons. 蔡凱旭: matches; mine stresses the verbatim quote.
 
 ---
 
@@ -94,7 +94,7 @@ Answers so far are 蔡尚融's. The others add their own view under each one (**
    >
    > 林彥宇: Agree. The fixed contract in #8 also meant each of us could run `uv run pytest` on our own branch before connecting, so a piece could be tested alone before it was connected.
    >
-   > TODO (team): 蔡凱旭
+   > 蔡凱旭: Agree. Because `draft_card()` was fixed in #8, I could build Draft with a MOCK without waiting for the API key, and no other tab had to change.
 
 2. **What was hard or awkward?**
 
@@ -104,7 +104,7 @@ Answers so far are 蔡尚融's. The others add their own view under each one (**
    >
    > 林彥宇: Agree. My own reviews were part of it: I merged #10 less than nine minutes after it was opened with only "LGTM", approved #12 with "LGTM", and answered 周廷威's real note on #11 with "ok". The first substantive review I wrote was on #13, at the very end, which is too late to change anything.
    >
-   > TODO (team): 蔡凱旭
+   > 蔡凱旭: Agree. #10 was merged with only "LGTM" and I did not ask anyone to explain it. A conflict fix then removed my PROMPT_LOG entry, and I only learned that in the #13 review.
 
 3. **Who had the least chance to contribute, and what would help next time?**
 
@@ -114,7 +114,7 @@ Answers so far are 蔡尚融's. The others add their own view under each one (**
    >
    > 林彥宇: Building was even. Reviewing was not: the person merging was usually the only one who read the code, and only briefly. Next time each PR gets a named reviewer before it is opened, so the review is not left to whoever is free at the end.
    >
-   > TODO (team): 蔡凱旭
+   > 蔡凱旭: Agree with 林彥宇: building was even, reviewing was not. When I merged #9, my only question was why we use Streamlit.
 
 4. **What is the one thing we will do differently in the next team session (merge day)?**
 
@@ -126,7 +126,7 @@ Answers so far are 蔡尚融's. The others add their own view under each one (**
    >
    > 林彥宇: Agree with the steward-approval rule. I'd add: if the steward finds a problem, it is fixed before the merge, or the merge is stopped. On #13 I found the missing PROMPT_LOG entries and still merged, with the fix moved to #14.
    >
-   > TODO (team): 蔡凱旭
+   > 蔡凱旭: Agree with the steward-approval rule. I'd add: when resolving a conflict in a shared file like `PROMPT_LOG.md`, keep both sides and check the headings before pushing.
 
 5. **Blockers we found, and who follows up:**
 
