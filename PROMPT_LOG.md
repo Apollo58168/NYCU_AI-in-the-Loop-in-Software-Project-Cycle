@@ -78,4 +78,4 @@
 - **What I retained:** All of it, after reading the diff and running the tests (118 passed, 1 xfailed). To check that the tests can fail, I removed the second try on invalid JSON and six tests failed.
 - **What I changed:** Followed #21 instead of the older plan: when Claude fails, the app shows an error rather than silently falling back to the MOCK, so a MOCK card is never mistaken for a Claude card. Confidence is capped at "low" in code whenever the reason is unknown, for both drafters.
 - **Human decision and reason:** Opened as a draft PR because the course API key has not arrived; the real-API run of the prompt suite and the failure → fix → re-run cycle come next.
-- **Repository result:** PR link added after the PR is opened.
+- **Repository result:** [PR #36 — Claude drafter behind draft_card](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/36) (draft)
