@@ -68,4 +68,4 @@
 - **What I retained:** All of it, after reading the diff and running the tests (96 passed, 1 xfailed for T3). To check that the tests can fail, I put back "first reason sentence anywhere" and five tests failed.
 - **What I changed:** The issue says "same sentence only". That would break the suite's T1/T2 cases and the walking-skeleton demo, where the reason is the next sentence ("…instead of WebSockets. Because WebSockets kept dropping…"). So the next sentence is also allowed, but only when it states no decision of its own.
 - **Human decision and reason:** The rule stays narrow (own sentence or the next one) so that an unrelated "because" elsewhere in a long thread is never attached; a missing reason becomes `unknown`, which our CP1 criterion prefers to an unsupported one.
-- **Repository result:** PR link added after the PR is opened.
+- **Repository result:** [PR #35 — Reason only from the decision's own sentence](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/35)
