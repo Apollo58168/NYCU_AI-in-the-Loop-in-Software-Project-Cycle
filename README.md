@@ -5,6 +5,8 @@
 - [Prompt Engineering Log](PROMPT_LOG.md)
 - [Prompt Test Suite](docs/prompt_test_suite.md)
 
+**Current status (2026-11-24):** Claude is not connected yet, so no API key is needed. Draft uses a keyword MOCK (`decisiontrace/drafter.py`) and Ask uses keyword matching (`decisiontrace/ask.py`). Module D's PR 2 (#21) connects Claude and updates this line.
+
 ## Run the prototype
 
 DecisionTrace is a Python 3.12 app built with Streamlit and managed with [uv](https://docs.astral.sh/uv/).

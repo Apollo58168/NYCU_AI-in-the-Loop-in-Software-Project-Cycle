@@ -49,3 +49,23 @@
 **Why:** Claude will word decisions and reasons differently from the MOCK, so exact-text cases would all break when #21 merges and would have to be rewritten right before CP2. Run 1 also found that "undecided" and "disagreed" were drafted as decisions; the MOCK now matches English markers as whole words, because the MOCK stays the fallback whenever no API key is set.  
 **Alternative rejected:** A PromptFoo config like the Week 10 lab. It can only test a prompt and an API, and we have neither until #21; the Python runner tests the MOCK today and can still call the Claude drafter later.  
 **Led by:** 蔡尚融 (module A PR 2).
+
+## 2026-11-25 — Steward turns and PR timing until CP2
+**What:**
+- Steward turns until the 11/29 deadline. Each steward approves the listed PRs with a substantive comment:
+
+  | Turn | Steward | Reviews and merges |
+  | --- | --- | --- |
+  | 11/24–25 | 周廷威 | #24 (README status), #27 (this schedule), #28 (interim evaluation report) |
+  | 11/26 | 蔡凱旭 | #25 (prompt suite), #26 (#18/#19), #29 (module C PR 2: cited answers) |
+  | 11/27 (merge day) | 蔡尚融 | the fix for #14, the PR for #17, #30 (walking-skeleton worksheet); writes the merge plan |
+  | 11/28–29 | 林彥宇 | the PR for #21 (Claude drafter); final CP2 check of `main` |
+
+- 蔡凱旭 opens the PRs for #17 and #21 by 11/26, as drafts if they are not finished, so that they appear in the merge plan.
+- Anything merged after merge day (expected: #21) is a follow-up merge on 11/28. It is recorded under the merge-plan entry, with the same check: someone other than the steward clones `main` fresh and runs the main task.
+
+**Why:** 蔡尚融 pointed out two problems. First, #17 and #21 are due 11/28, after the 11/27 merge day. Second, nobody was steward on 11/28–29. Every member needs two steward approvals with a substantive comment for CP2. 周廷威 already has them (#22, #23). The table gives 蔡凱旭 and 蔡尚融 two each, and gives 林彥宇 the second one (the first was #13).
+
+**Alternative rejected:** Moving merge day to 11/28, which leaves no buffer before the 11/29 deadline. Also rejected: one steward for all remaining days, which would leave the other two short of approvals.
+
+**Led by:** 林彥宇, after 蔡尚融 raised the timing problem; accepted through the steward's review of this PR.
