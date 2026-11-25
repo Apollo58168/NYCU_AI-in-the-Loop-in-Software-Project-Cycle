@@ -1,22 +1,29 @@
 """Draft tab (module D): draft a decision card from a pasted discussion.
 
 Streamlit reruns this file on every click, so the drafted card is kept in
-st.session_state between "Draft card" and "Save as draft". Every card drafted
-here is labelled MOCK until module D's second PR connects the Claude API.
+st.session_state between "Draft card" and "Save as draft". Every card is
+labelled as a MOCK draft or as an AI draft by Claude; either needs review.
+If Claude fails, the error is shown, no card is made, and the pasted text
+stays in the text area for another try.
 """
 
 import streamlit as st
 
-from decisiontrace import store
+from decisiontrace import llm, store
 from decisiontrace.cards import UNKNOWN
 from decisiontrace.drafter import MOCK, draft_card
 
 MOCK_LABEL = "MOCK draft, not AI - needs human review"
+AI_LABEL = "AI draft by {model} - needs human review"
 
 
 def render() -> None:
     st.subheader("Draft a decision card")
     st.caption("Paste one discussion about one decision. A teammate reviews every card.")
+    if llm.is_configured():
+        st.caption(f"Drafting with Claude ({llm.model_name()}).")
+    else:
+        st.caption("No ANTHROPIC_API_KEY set, so the keyword MOCK drafts the card.")
 
     author = st.text_input("Your name (author)", key="draft_author")
     source = st.text_input("Source label", value="pasted text", key="draft_source")
@@ -29,10 +36,11 @@ def render() -> None:
             st.error("Please enter your name as the author.")
         else:
             try:
-                st.session_state["draft_card"] = draft_card(
-                    text, author.strip(), source.strip() or "pasted text"
-                )
-            except ValueError as exc:
+                with st.spinner("Drafting..."):
+                    st.session_state["draft_card"] = draft_card(
+                        text, author.strip(), source.strip() or "pasted text"
+                    )
+            except (ValueError, llm.DraftError) as exc:
                 st.session_state.pop("draft_card", None)
                 st.error(str(exc))
 
@@ -41,8 +49,7 @@ def render() -> None:
         return
 
     with st.container(border=True):
-        if card.drafted_by == MOCK:
-            st.warning(MOCK_LABEL)
+        st.warning(MOCK_LABEL if card.drafted_by == MOCK else AI_LABEL.format(model=card.drafted_by))
         st.markdown(f"**Decision:** {card.decision}")
         st.markdown(f"**Reason:** {card.reason}")
         st.markdown(f"**Quote:** {card.verbatim_quote}")

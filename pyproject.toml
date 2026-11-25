@@ -3,7 +3,11 @@ name = "decisiontrace"
 version = "0.1.0"
 description = "AI-assisted decision memory for student software teams"
 requires-python = ">=3.12"
-dependencies = ["streamlit>=1.40"]
+dependencies = [
+    "anthropic>=2.14.0",
+    "python-dotenv>=1.2.4",
+    "streamlit>=1.40",
+]
 
 [dependency-groups]
 dev = ["pytest>=8"]

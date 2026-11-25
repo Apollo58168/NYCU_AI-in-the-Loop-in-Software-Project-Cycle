@@ -69,3 +69,13 @@
 - **What I changed:** The issue says "same sentence only". That would break the suite's T1/T2 cases and the walking-skeleton demo, where the reason is the next sentence ("…instead of WebSockets. Because WebSockets kept dropping…"). So the next sentence is also allowed, but only when it states no decision of its own.
 - **Human decision and reason:** The rule stays narrow (own sentence or the next one) so that an unrelated "because" elsewhere in a long thread is never attached; a missing reason becomes `unknown`, which our CP1 criterion prefers to an unsupported one. After 蔡尚融's review, a reason from the next sentence gets confidence `low` and a warning, because keywords cannot tell it from an unrelated "because" (E12, E13 added as known MOCK failures).
 - **Repository result:** [PR #35 — Reason only from the decision's own sentence](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/35)
+
+## 2026-11-25 — Claude drafter behind draft_card (module D, PR 2, #21)
+
+- **Tool and model:** Claude Code (Claude Opus 5.5)
+- **Prompt summary:** I gave Claude Code our module D PR 2 task and issue #21: call Claude from `draft_card()` when `ANTHROPIC_API_KEY` is set and keep the MOCK otherwise; on timeout, rate limit or invalid JSON keep the pasted text, show a retryable error and save no card; a system prompt that never invents a reason; tests with a stubbed client; a prompt card.
+- **Output:** `decisiontrace/llm.py`, the shared card building in `decisiontrace/drafter.py`, `prompts/draft_card.md`, the Draft tab's error and AI label, `tests/test_llm.py` (22 tests, no network), `tests/conftest.py`, `.env.example`, `docs/PROMPT_CARD.md`, and the README status line.
+- **What I retained:** All of it, after reading the diff and running the tests (118 passed, 1 xfailed). To check that the tests can fail, I removed the second try on invalid JSON and six tests failed.
+- **What I changed:** Followed #21 instead of the older plan: when Claude fails, the app shows an error rather than silently falling back to the MOCK, so a MOCK card is never mistaken for a Claude card. Confidence is capped at "low" in code whenever the reason is unknown, for both drafters.
+- **Human decision and reason:** Opened as a draft PR because the course API key has not arrived; the real-API run of the prompt suite and the failure → fix → re-run cycle come next.
+- **Repository result:** PR link added after the PR is opened.

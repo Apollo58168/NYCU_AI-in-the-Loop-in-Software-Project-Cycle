@@ -5,7 +5,7 @@
 - [Prompt Engineering Log](PROMPT_LOG.md)
 - [Prompt Test Suite](docs/prompt_test_suite.md)
 
-**Current status (2026-11-24):** Claude is not connected yet, so no API key is needed. Draft uses a keyword MOCK (`decisiontrace/drafter.py`) and Ask uses keyword matching (`decisiontrace/ask.py`). Module D's PR 2 (#21) connects Claude and updates this line.
+**Current status (2026-11-25):** Draft can use Claude, but no API key is needed to run the app. Without `ANTHROPIC_API_KEY` the Draft tab uses the keyword MOCK (`decisiontrace/drafter.py`), and every card says which one drafted it. To use Claude, copy `.env.example` to `.env` and fill in the key (the `.env` file is never committed). The Claude drafter has not been run against the real API yet: the course key has not arrived (#21). Ask uses keyword matching (`decisiontrace/ask.py`).
 
 ## Run the prototype
 
@@ -48,3 +48,4 @@ Cards are stored in `data/cards.json`, which is not committed. Delete that file 
 | `app/tab_ask.py` | Ask tab | C |
 | `app/tab_cards.py` | Approved cards tab | A |
 | `decisiontrace/prompt_suite.py`, `tests/prompt_suite/cases.json` | Prompt test suite for the drafter (`uv run python -m decisiontrace.prompt_suite`) | A |
+| `decisiontrace/drafter.py`, `decisiontrace/llm.py`, `prompts/draft_card.md` | Drafter: MOCK without a key, Claude with one; the system prompt ([prompt card](docs/PROMPT_CARD.md)) | D |
