@@ -43,7 +43,7 @@ None of the five CP1 pass/fail criteria has been tested yet. The prototype runs 
 | Retrieval study (criteria 1–3) | No ground truth, no participants | Commit the ground truth and the 3 questions before any card is drafted (CP1 §4), then recruit ≥ 6 students outside the team in Phase 3 |
 | Review cost (criterion 4) | No review timestamps | Record `reviewed_at` (module B) before the review task |
 | Unsupported-reason audit (criterion 5) | No approved cards from a real artifact set | Two members audit every approved card, as in CP1 §4; the inputs from #16 F1 stay in the prompt suite as a regression check |
-| Users outside the team | Two sessions done (P1, P2), but with the MOCK, a fixed sample history and no timing | Repeat the same tasks with Claude-drafted cards after #21, inside the retrieval study above |
+| Users outside the team | Two sessions done (P1, P2), but with the MOCK, a fixed sample history and no timing | In Phase 3 (CP3), after #21 connects Claude: 周廷威 repeats the same tasks with Claude-drafted cards as part of the retrieval study above. P1 and P2 are not counted among its ≥ 6 participants, because they have already seen the sample cards. |
 
 ## What this changes for Phase 3
 
