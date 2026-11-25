@@ -74,14 +74,21 @@ E5 and E6 were new: the 15 existing drafter tests and Group 11's review did not 
 
 **Check that the tests can fail:** putting plain substring matching back fails 4 tests (E5 and E6 in the suite, and the two new drafter tests).
 
+## Revision cycle 2 (MOCK drafter, 2026-11-25, #17)
+
+**Fix:** the reason now comes only from the decision's own sentence, or the sentence right after it if that sentence states no decision of its own. Text with more than one decision gets a warning asking to paste one discussion per decision. The `known_failure` notes for E1 and E2 were removed.
+
+**Run 3** ([results](prompt_suite_results/run3_mock_after_17.md)): 14 of 15 passed. Only T3 is left, as planned.
+
+**Check that the tests can fail:** putting back "first reason sentence anywhere" fails E1 and E2 in the suite (strict xfail no longer covers them) and the new drafter tests.
+
 ## Next runs
 
-- After #17 merges: E1 and E2 should pass; remove their `known_failure` notes (strict xfail will say so) and save run 3.
 - After #21 connects Claude: run the suite with the Claude drafter and an API key, save the table, and record any failure → prompt change → re-run here. T3 is expected to pass there.
 - `pytest` runs only the MOCK. The Claude drafter is run with the CLI (`--drafter`), because it needs an API key, costs money and can answer differently each run. `known_failure` is keyed by drafter (`mock` today), so if Claude is ever added to `pytest` it gets its own `known_failure.claude` list instead of reusing the MOCK's.
 
 ## What this suite does not cover yet
 
-- The Claude drafter has not been run: it does not exist yet (#21).
+- The Claude drafter has not been run: #21 is open as a draft, waiting for the course API key.
 - One run per case; Claude's answers can vary between runs, so a Claude result should be run more than once before we trust it.
 - Ask (module C) is keyword matching, not AI, so it is tested in `tests/test_ask.py`, not here.

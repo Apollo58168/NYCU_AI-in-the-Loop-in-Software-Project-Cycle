@@ -86,9 +86,6 @@
       "expect": {
         "forbidden_pairs": [["PostgreSQL", "team knows"]],
         "warns": true
-      },
-      "known_failure": {
-        "mock": "F1: the MOCK takes the first reason sentence in the text. #17 (module D) fixes this."
       }
     },
     {
@@ -102,9 +99,6 @@
         "reason": "unknown",
         "forbidden_pairs": [["PostgreSQL", "cafe"]],
         "confidence_at_most": "low"
-      },
-      "known_failure": {
-        "mock": "F1: the MOCK takes the first reason sentence in the text. #17 (module D) fixes this."
       }
     },
     {
