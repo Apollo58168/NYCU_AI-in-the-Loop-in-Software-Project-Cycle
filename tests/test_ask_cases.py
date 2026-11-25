@@ -23,6 +23,11 @@ CASES = [
     ("Did we switch to server-sent events?", []),
     ("How do users log in with GitHub?", []),
     ("What colour is the logo?", []),
+    # Asked by user-testing participants (P1, P2) on 2026-11-25.
+    ("What do we use to track bugs?", []),
+    ("為什麼即時看板用 polling，不用 WebSockets？", ["s-poll"]),
+    ("當初為什麼即時看板用 polling，不用 WebSockets？", ["s-poll"]),
+    ("為什麼用 polling 不用 WebSockets？", ["s-poll"]),
 ]
 
 

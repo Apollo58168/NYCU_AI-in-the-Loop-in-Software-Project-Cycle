@@ -27,6 +27,8 @@ _STOP_WORDS = {
     "so", "that", "the", "this", "to", "us", "was", "we", "were", "what",
     "when", "which", "who", "why", "will", "with",
     "decide", "decided", "decision", "decisions", "choose", "chose", "chosen",
+    # "use" starts most decisions ("Use polling ..."), so sharing it says nothing.
+    "use", "used", "uses", "using",
 }
 _STOP_BIGRAMS = {
     "我們", "為什", "什麼", "決定", "怎麼", "是否", "為何", "哪個", "一個", "這個",
@@ -60,9 +62,12 @@ def _card_tokens(card: Card) -> set[str]:
 def rank(question: str, cards: list[Card]) -> list[Card]:
     """Approved cards that match the question, best first, at most MAX_SOURCES.
 
-    A card counts as relevant when it shares at least a third of the
-    question's keywords (so one stray shared word such as "server" does not
-    make an unrelated card the answer) and at least half as many keywords as
+    A card counts as relevant when it shares at least one keyword with a short
+    question, or at least two with a question of four or more keywords, so one
+    stray shared word such as "server" does not make an unrelated card the
+    answer. (A share of the question's keywords does not work for Chinese: a
+    long Chinese sentence turns into many character pairs, and the real
+    match was dropped.) It must also share at least half as many keywords as
     the best card. Equal scores put the newer card first, since a later
     decision may have replaced an earlier one.
     """
@@ -72,7 +77,8 @@ def rank(question: str, cards: list[Card]) -> list[Card]:
         for card in cards
         if card.status == "approved"
     ]
-    scored = [(score, card) for score, card in scored if score > 0 and 3 * score >= len(wanted)]
+    needed = 1 if len(wanted) <= 3 else 2
+    scored = [(score, card) for score, card in scored if score >= needed]
     if not scored:
         return []
     scored.sort(key=lambda sc: (sc[0], sc[1].created_at), reverse=True)
