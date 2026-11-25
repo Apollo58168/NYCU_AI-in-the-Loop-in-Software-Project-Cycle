@@ -50,9 +50,9 @@
 
   | Turn | Steward | Reviews and merges |
   | --- | --- | --- |
-  | 11/24–25 | 周廷威 | #24 (README status) |
-  | 11/26 | 蔡凱旭 | #25 (prompt suite), #26 (#18/#19) |
-  | 11/27 (merge day) | 蔡尚融 | the fix for #14, the PR for #17; writes the merge plan |
+  | 11/24–25 | 周廷威 | #24 (README status), #27 (this schedule), #28 (interim evaluation report) |
+  | 11/26 | 蔡凱旭 | #25 (prompt suite), #26 (#18/#19), #29 (module C PR 2: cited answers) |
+  | 11/27 (merge day) | 蔡尚融 | the fix for #14, the PR for #17, #30 (walking-skeleton worksheet); writes the merge plan |
   | 11/28–29 | 林彥宇 | the PR for #21 (Claude drafter); final CP2 check of `main` |
 
 - 蔡凱旭 opens the PRs for #17 and #21 by 11/26, as drafts if they are not finished, so that they appear in the merge plan.
