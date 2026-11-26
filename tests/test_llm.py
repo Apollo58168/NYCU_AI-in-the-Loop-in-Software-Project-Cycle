@@ -107,6 +107,41 @@ def test_invented_quote_is_still_replaced(claude):
     assert card.warnings
 
 
+def test_reason_without_a_supporting_quote_is_removed(claude):
+    # 林彥宇's review of #36, problem 1: Claude's own-words reason must not
+    # survive when its quote is not in the text.
+    claude(answer({
+        **GOOD,
+        "decision": "Use PostgreSQL",
+        "reason": "Our data is relational.",
+        "verbatim_quote": "our data is relational",
+        "alternatives": [],
+    }))
+    card = draft_card("We decided to use PostgreSQL. Lunch was late.", "alice")
+    assert card.decision == "Use PostgreSQL"
+    assert card.reason == UNKNOWN
+    assert card.verbatim_quote == UNKNOWN
+    assert card.confidence == "low"
+    assert any("reason was removed" in w for w in card.warnings)
+
+
+@pytest.mark.parametrize("word", ["Unknown", "UNKNOWN", " unknown "])
+def test_unknown_in_any_case_means_no_decision(claude, word):
+    # 林彥宇's review of #36, problem 2.
+    claude(answer({**GOOD, "decision": word, "reason": word, "verbatim_quote": word, "alternatives": []}))
+    card = draft_card("今天午餐好吃", "alice")
+    assert card.decision == NO_DECISION
+    assert card.reason == UNKNOWN
+    assert card.confidence == "low"
+
+
+def test_unknown_reason_in_capitals_caps_confidence(claude):
+    claude(answer({**GOOD, "reason": "Unknown", "verbatim_quote": "We decided to use polling instead of WebSockets."}))
+    card = draft_card(TEXT, "alice")
+    assert card.reason == UNKNOWN
+    assert card.confidence == "low"
+
+
 def test_unknown_reason_caps_confidence(claude):
     claude(answer({**GOOD, "reason": "unknown", "verbatim_quote": "We decided to use polling instead of WebSockets."}))
     card = draft_card(TEXT, "alice")

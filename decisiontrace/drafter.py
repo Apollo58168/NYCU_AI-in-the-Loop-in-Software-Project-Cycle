@@ -118,8 +118,17 @@ def _mock_fields(text: str, warnings: list[str]) -> dict:
     }
 
 
+def _is_unknown(value: str) -> bool:
+    # Claude may write "Unknown" or "UNKNOWN"; all of them mean the field is empty.
+    return value.strip().casefold() == UNKNOWN
+
+
 def _to_card(fields: dict, author: str, source: str, drafted_by: str, warnings: list[str]) -> Card:
     """Build the card the same way for the MOCK and for Claude."""
+    fields = {
+        **fields,
+        **{k: UNKNOWN for k in ("decision", "reason", "verbatim_quote") if _is_unknown(fields[k])},
+    }
     if fields["decision"] == UNKNOWN:
         # The form from #26: review() refuses to approve a card whose decision is UNKNOWN.
         warnings.append(NO_DECISION)
@@ -180,4 +189,21 @@ def draft_card(source_text: str, author: str, source: str = "pasted text") -> Ca
             )
     else:
         fields, drafted_by = _mock_fields(text, warnings), MOCK
-    return check_quote(_to_card(fields, author, source, drafted_by, warnings), text)
+    card = check_quote(_to_card(fields, author, source, drafted_by, warnings), text)
+    return _drop_unsupported_reason(card)
+
+
+def _drop_unsupported_reason(card: Card) -> Card:
+    """A reason whose quote is not in the text has no support, so it goes too.
+
+    The MOCK's reason is its quote, but Claude writes the reason in its own
+    words; without this, an invented reason could survive check_quote() and be
+    approved (CP1 §4: no approved card may have an unsupported reason).
+    """
+    if card.verbatim_quote == UNKNOWN and card.reason != UNKNOWN:
+        card.reason = UNKNOWN
+        card.confidence = "low"
+        card.warnings.append(
+            "The reason was removed because no quote from the source supports it."
+        )
+    return card

@@ -31,14 +31,16 @@ One call per draft. The Draft tab sends the pasted discussion to Claude, and Cla
 
 1. The JSON must have exactly the six fields, non-empty text, a list of alternatives and a valid confidence. Otherwise Claude is asked once more, then the user gets an error.
 2. `check_quote()`: a quote that is not a word-for-word part of the pasted text becomes "unknown", confidence drops to "low", and the card gets a warning.
-3. A card with reason "unknown" is never above "low" confidence.
+3. If the quote was replaced, the reason is removed too ("unknown", with a warning): Claude writes the reason in its own words, so a reason without a quote from the text has no support.
+4. "Unknown" in any capitalisation counts as "unknown", so a chit-chat answer of "Unknown" becomes the normal no-decision card.
+5. A card with reason "unknown" is never above "low" confidence.
 
 ## How it can fail, and what the user sees
 
 | Failure | What happens |
 | --- | --- |
 | No API key | The MOCK drafts. The tab says so above the text box. |
-| No answer within 30 seconds | Error "Claude did not answer within 30 seconds…". No card is made; the pasted text stays, so the user can press Draft card again. |
+| No answer in time (30 s per try; the SDK tries twice, so up to about a minute) | Error "Claude did not answer in time…". No card is made; the pasted text stays, so the user can press Draft card again. |
 | Rate limit (HTTP 429) | Error asking to wait a minute and try again. No card. |
 | Invalid JSON, or the answer is cut off | Asked once more; a second bad answer gives an error. No incomplete card is saved. |
 | Wrong key (HTTP 401) | Error asking to check `ANTHROPIC_API_KEY` in `.env`. |
@@ -47,7 +49,7 @@ One call per draft. The Draft tab sends the pasted discussion to Claude, and Cla
 | Claude is wrong (wrong decision, reason not really supported) | Not detectable in code. The reviewer must check the quote against the reason, and can reject or send the card back. This is the main risk our evaluation measures. |
 | An invented quote | Caught by `check_quote()`: the quote becomes "unknown" with a warning. |
 
-The SDK itself retries a timed-out or rate-limited request once before the app shows the error, so the wait can be up to about a minute.
+The SDK itself retries a timed-out or rate-limited request once before the app shows the error.
 
 ## How to run it
 

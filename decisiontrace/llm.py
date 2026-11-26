@@ -86,8 +86,7 @@ def _call(client, system: str, text: str):
     # Most specific first: APITimeoutError is a kind of APIConnectionError.
     except anthropic.APITimeoutError:
         raise DraftError(
-            f"Claude did not answer within {TIMEOUT_SECONDS:.0f} seconds. "
-            "Your text is kept; press Draft card to try again."
+            "Claude did not answer in time. Your text is kept; press Draft card to try again."
         ) from None
     except anthropic.RateLimitError:
         raise DraftError(
