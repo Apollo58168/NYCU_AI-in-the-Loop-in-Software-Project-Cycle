@@ -104,6 +104,8 @@ The course API key arrived, so the same cases ran against Claude (`claude-opus-5
 
 The MOCK still fails E11 (it has no way to see that "switched to" replaces an earlier decision), so E11 carries a `known_failure.mock` note.
 
+**Run 7** ([results](prompt_suite_results/run7_claude_after_rebase.md)), after rebasing on #26 and #35: 19 of 19, including E12 and E13 from #35, which the MOCK fails.
+
 ## Next runs
 
 - Re-run the Claude suite after any prompt change, and save the table as the next run number.

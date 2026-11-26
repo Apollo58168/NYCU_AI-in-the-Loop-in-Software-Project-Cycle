@@ -11,6 +11,7 @@ from streamlit.testing.v1 import AppTest
 from decisiontrace import llm, store
 from decisiontrace.cards import UNKNOWN
 from decisiontrace.drafter import MOCK, NO_DECISION, draft_card
+from decisiontrace.review import review
 
 TEXT = "We decided to use polling instead of WebSockets. Because WebSockets kept dropping behind the proxy."
 GOOD = {
@@ -130,9 +131,18 @@ def test_unknown_in_any_case_means_no_decision(claude, word):
     # 林彥宇's review of #36, problem 2.
     claude(answer({**GOOD, "decision": word, "reason": word, "verbatim_quote": word, "alternatives": []}))
     card = draft_card("今天午餐好吃", "alice")
-    assert card.decision == NO_DECISION
+    assert card.decision == UNKNOWN
+    assert NO_DECISION in card.warnings
     assert card.reason == UNKNOWN
     assert card.confidence == "low"
+
+
+def test_claude_unknown_card_cannot_be_approved(claude):
+    # With #26: the no-decision card Claude's "Unknown" turns into is refused.
+    claude(answer({**GOOD, "decision": "Unknown", "reason": "Unknown", "verbatim_quote": "Unknown", "alternatives": []}))
+    card = draft_card("今天午餐好吃", "alice")
+    with pytest.raises(ValueError):
+        review(card, "bob", "approve")
 
 
 def test_unknown_reason_in_capitals_caps_confidence(claude):
@@ -152,7 +162,8 @@ def test_unknown_reason_caps_confidence(claude):
 def test_no_decision(claude):
     claude(answer({**GOOD, "decision": "unknown", "reason": "unknown", "verbatim_quote": "unknown", "alternatives": []}))
     card = draft_card("Has anyone seen the lab slides?", "alice")
-    assert card.decision == NO_DECISION
+    assert card.decision == UNKNOWN
+    assert NO_DECISION in card.warnings
     assert card.confidence == "low"
 
 

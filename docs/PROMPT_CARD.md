@@ -1,6 +1,6 @@
 # Prompt card: the Claude drafter
 
-**Status (2026-11-26):** unit-tested with a stubbed client and run against the real API with the prompt test suite: 17 of 17 cases pass after one failure → fix → re-run cycle (reversed decisions; see `docs/prompt_test_suite.md`, revision cycle 3).
+**Status (2026-11-26):** unit-tested with a stubbed client and run against the real API with the prompt test suite: 19 of 19 cases pass (run 7) after one failure → fix → re-run cycle (reversed decisions; see `docs/prompt_test_suite.md`, revision cycle 3).
 
 ## What the AI does
 
