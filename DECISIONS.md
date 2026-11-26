@@ -1,6 +1,6 @@
 # Decisions Log
 
-**Current code steward:** 周廷威 ([**gainsborouo**](https://github.com/gainsborouo), @gainsborouo), since 2026-11-23 (see the entry *2026-11-23 — Steward handover: 林彥宇 → 周廷威* below).
+**Current code steward:** 蔡凱旭 ([**chrisouo**](https://github.com/chrisouo), @chrisouo), since 2026-11-26 (see the entry *2026-11-25 — Steward handover: 周廷威 → 蔡凱旭* below).
 
 ## 2026-09-21 — Initial code steward
 **What:** [**Apollo**](https://github.com/Apollo58168) is the initial code steward for the team.  
@@ -69,3 +69,19 @@
 **Alternative rejected:** Moving merge day to 11/28, which leaves no buffer before the 11/29 deadline. Also rejected: one steward for all remaining days, which would leave the other two short of approvals.
 
 **Led by:** 林彥宇, after 蔡尚融 raised the timing problem; accepted through the steward's review of this PR.
+
+## 2026-11-25 — Steward handover: 周廷威 → 蔡凱旭
+**What:** 周廷威 hands the code steward role to 蔡凱旭 at the end of the 11/24–25 turn. 蔡凱旭 is steward on 11/26.  
+**Done in 周廷威's turn:**
+- Reviewed and merged #15 (role swap and handover), #22 (Week 12 PR template), #23 (three checkable AI rules), #24 (README status line) and #28 (interim evaluation report), each with a substantive approval comment.
+- Approved #27 (steward turns until CP2); its author 林彥宇 merged it after adding the rows I asked for.
+- Approved #25 (prompt test suite) with a question on how known failures will be kept per drafter; 蔡尚融 answered in the PR. It stays for 蔡凱旭 to merge, as #27 says.
+- `main` passes `uv run pytest` (61 passed) after #28.
+
+**Handed over:**
+- #25 (prompt test suite), #26 (module B PR 2: #18, #19) and #29 (module C PR 2, 周廷威): review and merge on 11/26. #25 and #26 both add to the end of `PROMPT_LOG.md`; keep both entries when resolving.
+- [#14](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/issues/14): restore the module C and D entries in `PROMPT_LOG.md` (蔡凱旭, due 11/26).
+- #17 and #21: open the PRs on 11/26 (as drafts if not finished), so that the merge plan lists them.
+- This handover PR itself, which 周廷威 cannot merge.
+
+**Next handover:** 蔡凱旭 → 蔡尚融 at the end of 11/26.
