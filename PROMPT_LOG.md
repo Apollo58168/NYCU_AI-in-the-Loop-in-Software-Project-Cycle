@@ -39,3 +39,13 @@
 - **What I changed:** MOCK cards are labelled "MOCK (not AI)" here too, like in the Draft and Review tabs.
 - **Human decision and reason:** "Newest" uses the card's `created_at` (when it was drafted), because cards do not store a review time until module B's PR 2.
 - **Repository result:** [PR #12 — Approved cards tab](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/12)
+
+## 2026-11-24 — Prompt test suite for the drafter (module A, PR 2)
+
+- **Tool and model:** Claude Code (Claude Opus 5.5)
+- **Prompt summary:** I asked Claude Code to build the CP2 prompt test suite for `draft_card()`: at least ten typical and edge cases including Group 11's three inputs, a runner whose checks also work for the Claude drafter, one failure-fix-re-run cycle, and a doc page.
+- **Output:** `tests/prompt_suite/cases.json` (15 cases), `decisiontrace/prompt_suite.py`, `tests/test_prompt_suite.py`, `docs/prompt_test_suite.md`, two results tables, and a whole-word marker fix in `decisiontrace/drafter.py` with three drafter tests.
+- **What I retained:** All of it, after reading the diff and running `uv run pytest` (89 passed, 3 xfailed). To check that the tests can fail, I put plain substring matching back and four tests failed.
+- **What I changed:** Known MOCK failures (Group 11 F1 and F3) run as strict xfail instead of being left out, so the suite shows them and fails once #17 fixes them and the note is not removed.
+- **Human decision and reason:** Run 1 found that "undecided" and "disagreed" were drafted as decisions. I fixed that in the MOCK even though Claude will replace it, because #21 keeps the MOCK whenever no API key is set, which is how a fresh clone runs.
+- **Repository result:** this PR (module A PR 2).

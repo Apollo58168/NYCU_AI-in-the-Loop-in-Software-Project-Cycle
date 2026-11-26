@@ -44,6 +44,12 @@
 
 **Led by:** 林彥宇 (proposed in this PR); accepted through the steward's review.
 
+## 2026-11-24 — Prompt test suite checks key words, and runs against any drafter
+**What:** The CP2 prompt test suite (`docs/prompt_test_suite.md`, 15 cases) checks the draft card by key words and rules (quote is verbatim, no reason from an unrelated sentence, chit-chat gives no decision), not by exact text, and takes the drafter as a parameter. The same cases run against the keyword MOCK now and against the Claude drafter after #21. Known MOCK failures run as strict xfail.  
+**Why:** Claude will word decisions and reasons differently from the MOCK, so exact-text cases would all break when #21 merges and would have to be rewritten right before CP2. Run 1 also found that "undecided" and "disagreed" were drafted as decisions; the MOCK now matches English markers as whole words, because the MOCK stays the fallback whenever no API key is set.  
+**Alternative rejected:** A PromptFoo config like the Week 10 lab. It can only test a prompt and an API, and we have neither until #21; the Python runner tests the MOCK today and can still call the Claude drafter later.  
+**Led by:** 蔡尚融 (module A PR 2).
+
 ## 2026-11-25 — Steward turns and PR timing until CP2
 **What:**
 - Steward turns until the 11/29 deadline. Each steward approves the listed PRs with a substantive comment:
