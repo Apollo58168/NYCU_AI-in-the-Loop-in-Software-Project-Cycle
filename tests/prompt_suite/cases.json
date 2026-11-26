@@ -165,6 +165,34 @@
       "expect": {"refused": true}
     },
     {
+      "id": "E10-reason-not-in-text",
+      "kind": "edge",
+      "origin": "林彥宇's review of #36",
+      "checks": "The text gives no reason; a reason from the model's own knowledge (e.g. 'our data is relational') must not appear.",
+      "input": "We decided to use PostgreSQL. Lunch was late.",
+      "expect": {
+        "decision_contains": ["PostgreSQL"],
+        "reason": "unknown",
+        "confidence_at_most": "low"
+      }
+    },
+    {
+      "id": "E11-reversed-decision",
+      "kind": "edge",
+      "origin": "team plan for the suite (a decision that is later reversed); missing until run 4",
+      "checks": "The first decision was replaced later in the thread; the card must hold the decision that stands, with its reason, and warn that the text has more than one decision.",
+      "input": "Week 3: we decided to use MongoDB because nobody had set up a schema yet.\nWeek 6: joins across users and teams kept breaking, so we switched to PostgreSQL instead of MongoDB because our data is relational.",
+      "expect": {
+        "decision_contains": ["PostgreSQL"],
+        "reason_contains": ["relational"],
+        "forbidden_pairs": [["PostgreSQL", "schema"]],
+        "warns": true
+      },
+      "known_failure": {
+        "mock": "The MOCK drafts the first decision marker ('decided to use MongoDB'); 'switched to' is not a marker, and it cannot tell that a later message replaced it. Claude passes from run 6."
+      }
+    },
+    {
       "id": "E12-unrelated-reason-after",
       "kind": "edge",
       "origin": "蔡尚融's review of #35 (E2 with the sentences swapped)",

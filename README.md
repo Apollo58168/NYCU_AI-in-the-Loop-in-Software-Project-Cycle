@@ -5,7 +5,7 @@
 - [Prompt Engineering Log](PROMPT_LOG.md)
 - [Prompt Test Suite](docs/prompt_test_suite.md)
 
-**Current status (2026-11-25):** Draft can use Claude, but no API key is needed to run the app. Without `ANTHROPIC_API_KEY` the Draft tab uses the keyword MOCK (`decisiontrace/drafter.py`), and every card says which one drafted it. To use Claude, copy `.env.example` to `.env` and fill in the key (the `.env` file is never committed). The Claude drafter has not been run against the real API yet: the course key has not arrived (#21). Ask uses keyword matching (`decisiontrace/ask.py`).
+**Current status (2026-11-26):** Draft can use Claude, but no API key is needed to run the app. Without `ANTHROPIC_API_KEY` the Draft tab uses the keyword MOCK (`decisiontrace/drafter.py`), and every card says which one drafted it. To use Claude, copy `.env.example` to `.env` and fill in the key (the `.env` file is never committed). With Claude, the prompt test suite passes 17 of 17 cases ([run 6](docs/prompt_suite_results/run6_claude_after_fix.md)). Ask uses keyword matching (`decisiontrace/ask.py`).
 
 ## Run the prototype
 

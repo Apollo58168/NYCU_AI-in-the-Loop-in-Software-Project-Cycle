@@ -1,6 +1,6 @@
 # Prompt card: the Claude drafter
 
-**Status (2026-11-25):** written and unit-tested with a stubbed client, **not yet run against the real API**; the course API key has not arrived. The failure → fix → re-run cycle with the prompt test suite is still to do (#21).
+**Status (2026-11-26):** unit-tested with a stubbed client and run against the real API with the prompt test suite: 17 of 17 cases pass after one failure → fix → re-run cycle (reversed decisions; see `docs/prompt_test_suite.md`, revision cycle 3).
 
 ## What the AI does
 
@@ -19,6 +19,7 @@ One call per draft. The Draft tab sends the pasted discussion to Claude, and Cla
 
 | Rule in the prompt | Why |
 | --- | --- |
+| If a later message reverses or replaces the decision, draft the one that stands | Prompt-suite case E11: with "draft the first decision" Claude drafted the outdated MongoDB decision (run 5). |
 | Use "unknown" when the text gives no reason; never add a reason from your own knowledge | Our CP1 §4 pass criterion: no approved card may have an unsupported reason. R1 and R2 both feared a plausible but wrong reason more than a missing one. |
 | The reason must be about this decision, not another one | Group 11's review F1 (#17): a "because" about another decision was attached to the card. |
 | Copy the quote exactly, character for character | `check_quote()` replaces any quote that is not in the pasted text with "unknown". |

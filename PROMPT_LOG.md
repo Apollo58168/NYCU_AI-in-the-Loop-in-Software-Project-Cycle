@@ -79,3 +79,13 @@
 - **What I changed:** Followed #21 instead of the older plan: when Claude fails, the app shows an error rather than silently falling back to the MOCK, so a MOCK card is never mistaken for a Claude card. Confidence is capped at "low" in code whenever the reason is unknown, for both drafters.
 - **Human decision and reason:** Opened as a draft PR because the course API key has not arrived; the real-API run of the prompt suite and the failure → fix → re-run cycle come next.
 - **Repository result:** [PR #36 — Claude drafter behind draft_card](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/36) (draft)
+
+## 2026-11-26 — Prompt fix for reversed decisions, found by the Claude run of the prompt suite (module D, #21)
+
+- **Tool and model:** Claude Code (Claude Opus 5.5) ran the suite and proposed the case and the fix; the drafter under test was Claude (`claude-opus-5-5`) through the course API key.
+- **Prompt summary:** I asked Claude Code to run module A's prompt suite against the real Claude drafter, and, for CP2, to find one failure, fix the prompt and re-run.
+- **Output:** Run 4 passed 16 of 16. Claude Code compared the suite with the team's original case list and found "a decision that is later reversed" missing, so it added E11 (MongoDB in week 3, replaced by PostgreSQL in week 6). Run 5 failed E11: Claude drafted the outdated MongoDB decision with its week-3 reason, because the prompt said "draft the first decision". The fix in `prompts/draft_card.md` says to draft the decision that stands when a later message replaces it. Run 6 passed 17 of 17; E1, E2, E10 and E11 then passed two more runs each. Results: `docs/prompt_suite_results/run4_claude_before_fix.md`, `run5_claude_before_fix.md`, `run6_claude_after_fix.md`.
+- **What I retained:** The E11 case, the two-sentence prompt change, the three result tables and the "Revision cycle 3" section in `docs/prompt_test_suite.md`. I also kept E10 (林彥宇's PostgreSQL input from the #36 review).
+- **What I changed:** E11 gets a `known_failure.mock` note, because the keyword MOCK cannot see that "switched to" replaces a decision; it stays visible as a strict xfail.
+- **Human decision and reason:** A card that presents a replaced decision as current is exactly the misleading record CP1 warns about, so the card should hold the decision that stands, and the warning still tells the reviewer that the text had more than one. The whole cycle cost about US$0.3 of the course key.
+- **Repository result:** [PR #36 — Claude drafter behind draft_card](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/36)
