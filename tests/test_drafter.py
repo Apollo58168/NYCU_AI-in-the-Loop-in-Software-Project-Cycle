@@ -78,7 +78,8 @@ def test_whole_word_markers_still_match_next_to_punctuation():
 
 def test_no_decision_found():
     card = draft_card("Has anyone seen the lab slides? I can't find them.", "alice")
-    assert card.decision == NO_DECISION
+    assert card.decision == UNKNOWN
+    assert NO_DECISION in card.warnings
     assert card.reason == UNKNOWN
     assert card.verbatim_quote == UNKNOWN
     assert card.alternatives == []
@@ -101,7 +102,7 @@ def test_very_long_input_is_cut_with_a_warning():
 
 def test_decision_past_the_limit_is_not_seen():
     text = "x" * MAX_CHARS + " We decided to use Streamlit."
-    assert draft_card(text, "alice").decision == NO_DECISION
+    assert draft_card(text, "alice").decision == UNKNOWN
 
 
 def test_split_sentences_handles_both_languages():
@@ -145,3 +146,17 @@ def test_tab_shows_error_for_empty_text(tmp_path, monkeypatch):
 def test_tab_shows_error_without_author(tmp_path, monkeypatch):
     at, _ = _draft(tmp_path, monkeypatch, " ", ENGLISH)
     assert at.error
+
+
+def test_tab_save_message_says_who_reviews_next(tmp_path, monkeypatch):
+    at, _ = _draft(tmp_path, monkeypatch, "bob", ENGLISH)
+    at.button(key="draft_save").click().run()
+    assert "enter their own name as reviewer" in at.success[0].value
+
+
+def test_tab_offers_no_save_without_a_decision(tmp_path, monkeypatch):
+    # Group 11 review (#16, F2): chit-chat must not become a saved draft.
+    at, path = _draft(tmp_path, monkeypatch, "bob", "今天午餐好吃")
+    assert "No decision found" in at.info[0].value
+    assert not [b for b in at.button if b.key == "draft_save"]
+    assert store.load(path) == []

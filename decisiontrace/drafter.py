@@ -72,8 +72,8 @@ def draft_card(source_text: str, author: str, source: str = "pasted text") -> Ca
     """Return a draft card for the discussion in `source_text`.
 
     Raises ValueError for empty text. Text longer than MAX_CHARS is cut and the
-    card gets a warning. With no decision marker the card says so and has low
-    confidence. check_quote() always runs last.
+    card gets a warning. With no decision marker the decision is UNKNOWN, the card
+    has low confidence and a NO_DECISION warning; review() will not approve it. check_quote() always runs last.
     """
     text = (source_text or "").strip()
     if not text:
@@ -92,8 +92,9 @@ def draft_card(source_text: str, author: str, source: str = "pasted text") -> Ca
     reason = _first_with(sentences, _REASON)
 
     if decision is None:
+        warnings.append(NO_DECISION)
         card = Card(
-            decision=NO_DECISION,
+            decision=UNKNOWN,
             reason=UNKNOWN,
             verbatim_quote=UNKNOWN,
             alternatives=[],

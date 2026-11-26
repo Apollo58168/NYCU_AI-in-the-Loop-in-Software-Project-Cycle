@@ -8,6 +8,7 @@ here is labelled MOCK until module D's second PR connects the Claude API.
 import streamlit as st
 
 from decisiontrace import store
+from decisiontrace.cards import UNKNOWN
 from decisiontrace.drafter import MOCK, draft_card
 
 MOCK_LABEL = "MOCK draft, not AI - needs human review"
@@ -55,8 +56,13 @@ def render() -> None:
             f"drafted by {card.drafted_by}"
         )
 
-    if st.session_state.get("draft_saved") == card.id:
-        st.success("Saved as draft. It now waits in the Review tab.")
+    if card.decision == UNKNOWN:
+        st.info("No decision found. Add the sentence that states the decision, then draft again.")
+    elif st.session_state.get("draft_saved") == card.id:
+        st.success(
+            "Saved as draft. It now waits in the Review tab: ask a teammate to open it "
+            "and enter their own name as reviewer."
+        )
     elif st.button("Save as draft", key="draft_save"):
         try:
             store.upsert(card, store.DEFAULT_PATH)

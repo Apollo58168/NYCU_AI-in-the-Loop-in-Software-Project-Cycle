@@ -49,3 +49,13 @@
 - **What I changed:** Known MOCK failures (Group 11 F1 and F3) run as strict xfail instead of being left out, so the suite shows them and fails once #17 fixes them and the note is not removed.
 - **Human decision and reason:** Run 1 found that "undecided" and "disagreed" were drafted as decisions. I fixed that in the MOCK even though Claude will replace it, because #21 keeps the MOCK whenever no API key is set, which is how a fresh clone runs.
 - **Repository result:** this PR (module A PR 2).
+
+## 2026-11-25 — Review guards and next-step messages (module B, PR 2)
+
+- **Tool and model:** Claude Code (Claude Opus 5.5)
+- **Prompt summary:** I asked Claude Code to fix issues #18 and #19 from Group 11's review (#16): a card with no decision must not be saved or approved, and the Draft and Review tabs must tell the user the next step after Save and after Reject. Tests come from Group 11's inputs.
+- **Output:** changes to `decisiontrace/review.py`, `decisiontrace/drafter.py`, `app/tab_draft.py`, `app/tab_review.py`; 5 new tests in `tests/test_review.py` and `tests/test_drafter.py`, and 2 updated drafter tests.
+- **What I retained:** All of it, after reading the diff and running `uv run pytest` (66 passed). To check that the tests can fail, I broke each change once. Removing the approve guard, the Draft Save guard, or the Reject hint each made 1 test fail.
+- **What I changed:** The no-decision card now uses `decision = UNKNOWN` with the old text as a warning, so `review()` checks a value, not an error string. It does not change the shared `Card` contract.
+- **Human decision and reason:** The guard lives in `review()` as well as the Draft tab, so a no-decision card that is already saved (or arrives from another caller) still cannot be approved.
+- **Repository result:** see the PR for #18 and #19.
