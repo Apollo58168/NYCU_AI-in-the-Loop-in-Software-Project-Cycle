@@ -40,7 +40,7 @@ The choices below were shaped by three sources:
 | 3 | A long Chinese question found nothing; a short one worked | P1, P2 | will confuse users | Fixed in #29: long questions need two shared keywords, not a share of all keywords |
 | 4 | "No approved decision found." does not say whether a card is waiting for review or was rejected | P1, P2 | will confuse users | Phase 3 |
 | 5 | Drafts cannot be edited; a Chinese discussion gives three identical fields | P1, P2 | will confuse users | Edit-then-approve: out of scope in #19; CP3 |
-| 6 | Reject has no reason field; nothing tells the author whom to ask for review | P1, P2 | polish | Reviewer hint: fix in #26 (open, #19); reject reason field: Phase 3 |
+| 6 | Reject has no reason field; nothing tells the author whom to ask for review | P1, P2 | polish | Reviewer hint: fixed in #26 (#19); reject reason field: Phase 3 |
 | 7 | Review does not flag conflicts with approved cards | P2 (P1 checked by hand) | polish | Phase 3 |
 
 **What held.** Both participants caught the mismatched card in task 3, and both checked quotes before trusting an answer, which is the behaviour the design depends on.
