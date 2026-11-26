@@ -1,6 +1,6 @@
 # Walking Skeleton: Team Worksheet
 
-> **Filled in after the session.** The session took place on 2026-11-23, 20:44–21:49 (Asia/Taipei), and nobody typed into the worksheet during it. As the course FAQ allows, 蔡尚融 filled this in on 2026-11-25 from the PR history (#8–#13), commit times and review comments. Rows marked **TODO (team)** need what only the four of us remember: our own sentences and the team check. Each of us adds or corrects their own line before CP2.
+> **Filled in after the session.** The session took place on 2026-11-23, 20:44–21:49 (Asia/Taipei), and nobody typed into the worksheet during it. As the course FAQ allows, 蔡尚融 filled this in on 2026-11-25 from the PR history (#8–#13), commit times and review comments. Each of us then added our own lines (our one-sentence summaries and the team check) from memory; lines that could not be recovered are marked "not recorded".
 >
 > Merged PR from the session: [#13 — walking skeleton runs end to end](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/13)
 
@@ -84,7 +84,7 @@ Each piece was opened as its own PR into `walking-skeleton` and merged by a team
 
 ## Part 5 | Team check
 
-Answers so far are 蔡尚融's. The others add their own view under each one (**TODO (team)**), or write "agree".
+蔡尚融 answered first; each of the others then added their own view under each answer, in their own words.
 
 1. **What worked well in how we worked together today?**
 
