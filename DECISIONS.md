@@ -1,6 +1,6 @@
 # Decisions Log
 
-**Current code steward:** 周廷威 ([**gainsborouo**](https://github.com/gainsborouo), @gainsborouo), since 2026-11-23 (see the entry *2026-11-23 — Steward handover: 林彥宇 → 周廷威* below).
+**Current code steward:** 蔡凱旭 ([**chrisouo**](https://github.com/chrisouo), @chrisouo), since 2026-11-26 (see the entry *2026-11-25 — Steward handover: 周廷威 → 蔡凱旭* below).
 
 ## 2026-09-21 — Initial code steward
 **What:** [**Apollo**](https://github.com/Apollo58168) is the initial code steward for the team.  
@@ -43,3 +43,45 @@
 **Alternative rejected:** Keeping the Week 3 wording ("states whether AI was used", "a teammate can explain the result"), which every one of those PRs already met on paper.
 
 **Led by:** 林彥宇 (proposed in this PR); accepted through the steward's review.
+
+## 2026-11-24 — Prompt test suite checks key words, and runs against any drafter
+**What:** The CP2 prompt test suite (`docs/prompt_test_suite.md`, 15 cases) checks the draft card by key words and rules (quote is verbatim, no reason from an unrelated sentence, chit-chat gives no decision), not by exact text, and takes the drafter as a parameter. The same cases run against the keyword MOCK now and against the Claude drafter after #21. Known MOCK failures run as strict xfail.  
+**Why:** Claude will word decisions and reasons differently from the MOCK, so exact-text cases would all break when #21 merges and would have to be rewritten right before CP2. Run 1 also found that "undecided" and "disagreed" were drafted as decisions; the MOCK now matches English markers as whole words, because the MOCK stays the fallback whenever no API key is set.  
+**Alternative rejected:** A PromptFoo config like the Week 10 lab. It can only test a prompt and an API, and we have neither until #21; the Python runner tests the MOCK today and can still call the Claude drafter later.  
+**Led by:** 蔡尚融 (module A PR 2).
+
+## 2026-11-25 — Steward turns and PR timing until CP2
+**What:**
+- Steward turns until the 11/29 deadline. Each steward approves the listed PRs with a substantive comment:
+
+  | Turn | Steward | Reviews and merges |
+  | --- | --- | --- |
+  | 11/24–25 | 周廷威 | #24 (README status), #27 (this schedule), #28 (interim evaluation report) |
+  | 11/26 | 蔡凱旭 | #25 (prompt suite), #26 (#18/#19), #29 (module C PR 2: cited answers) |
+  | 11/27 (merge day) | 蔡尚融 | the fix for #14, the PR for #17, #30 (walking-skeleton worksheet); writes the merge plan |
+  | 11/28–29 | 林彥宇 | the PR for #21 (Claude drafter); final CP2 check of `main` |
+
+- 蔡凱旭 opens the PRs for #17 and #21 by 11/26, as drafts if they are not finished, so that they appear in the merge plan.
+- Anything merged after merge day (expected: #21) is a follow-up merge on 11/28. It is recorded under the merge-plan entry, with the same check: someone other than the steward clones `main` fresh and runs the main task.
+
+**Why:** 蔡尚融 pointed out two problems. First, #17 and #21 are due 11/28, after the 11/27 merge day. Second, nobody was steward on 11/28–29. Every member needs two steward approvals with a substantive comment for CP2. 周廷威 already has them (#22, #23). The table gives 蔡凱旭 and 蔡尚融 two each, and gives 林彥宇 the second one (the first was #13).
+
+**Alternative rejected:** Moving merge day to 11/28, which leaves no buffer before the 11/29 deadline. Also rejected: one steward for all remaining days, which would leave the other two short of approvals.
+
+**Led by:** 林彥宇, after 蔡尚融 raised the timing problem; accepted through the steward's review of this PR.
+
+## 2026-11-25 — Steward handover: 周廷威 → 蔡凱旭
+**What:** 周廷威 hands the code steward role to 蔡凱旭 at the end of the 11/24–25 turn. 蔡凱旭 is steward on 11/26.  
+**Done in 周廷威's turn:**
+- Reviewed and merged #15 (role swap and handover), #22 (Week 12 PR template), #23 (three checkable AI rules), #24 (README status line) and #28 (interim evaluation report), each with a substantive approval comment.
+- Approved #27 (steward turns until CP2); its author 林彥宇 merged it after adding the rows I asked for.
+- Approved #25 (prompt test suite) with a question on how known failures will be kept per drafter; 蔡尚融 answered in the PR. It stays for 蔡凱旭 to merge, as #27 says.
+- `main` passes `uv run pytest` (61 passed) after #28.
+
+**Handed over:**
+- #25 (prompt test suite), #26 (module B PR 2: #18, #19) and #29 (module C PR 2, 周廷威): review and merge on 11/26. #25 and #26 both add to the end of `PROMPT_LOG.md`; keep both entries when resolving.
+- [#14](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/issues/14): restore the module C and D entries in `PROMPT_LOG.md` (蔡凱旭, due 11/26).
+- #17 and #21: open the PRs on 11/26 (as drafts if not finished), so that the merge plan lists them.
+- This handover PR itself, which 周廷威 cannot merge.
+
+**Next handover:** 蔡凱旭 → 蔡尚融 at the end of 11/26.

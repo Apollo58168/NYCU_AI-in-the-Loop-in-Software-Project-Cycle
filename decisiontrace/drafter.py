@@ -37,10 +37,24 @@ def split_sentences(text: str) -> list[str]:
     return [s.strip() for s in _SENTENCE_END.split(text) if s.strip()]
 
 
-def _first_with(sentences: list[str], markers: tuple[str, ...]) -> str | None:
+def _marker_pattern(markers: tuple[str, ...]) -> re.Pattern[str]:
+    """Match English markers as whole words, so "undecided" and "disagreed"
+    do not count as "decided" and "agreed". Chinese has no spaces between
+    words, so Chinese markers still match anywhere."""
+    parts = [
+        rf"(?<![a-z]){re.escape(m)}(?![a-z])" if m.isascii() else re.escape(m)
+        for m in markers
+    ]
+    return re.compile("|".join(parts), re.IGNORECASE)
+
+
+_DECISION = _marker_pattern(DECISION_MARKERS)
+_REASON = _marker_pattern(REASON_MARKERS)
+
+
+def _first_with(sentences: list[str], pattern: re.Pattern[str]) -> str | None:
     for sentence in sentences:
-        lower = sentence.lower()
-        if any(m in lower for m in markers):
+        if pattern.search(sentence):
             return sentence
     return None
 
@@ -74,8 +88,8 @@ def draft_card(source_text: str, author: str, source: str = "pasted text") -> Ca
         )
 
     sentences = split_sentences(text)
-    decision = _first_with(sentences, DECISION_MARKERS)
-    reason = _first_with(sentences, REASON_MARKERS)
+    decision = _first_with(sentences, _DECISION)
+    reason = _first_with(sentences, _REASON)
 
     if decision is None:
         warnings.append(NO_DECISION)
