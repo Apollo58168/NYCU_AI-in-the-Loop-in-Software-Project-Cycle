@@ -163,6 +163,36 @@
       "checks": "Whitespace only is refused with an error, not turned into a card.",
       "input": "   \n\t ",
       "expect": {"refused": true}
+    },
+    {
+      "id": "E12-unrelated-reason-after",
+      "kind": "edge",
+      "origin": "蔡尚融's review of #35 (E2 with the sentences swapped)",
+      "checks": "The 'because' right after the decision is about lunch, so the decision has no supported reason.",
+      "input": "We decided to use PostgreSQL. Lunch was late because the cafe was busy.",
+      "expect": {
+        "decision_contains": ["PostgreSQL"],
+        "forbidden_pairs": [["PostgreSQL", "cafe"]],
+        "confidence_at_most": "low"
+      },
+      "known_failure": {
+        "mock": "Keywords cannot tell that the next sentence is about lunch; the MOCK attaches it, but with confidence low and a warning (#35)."
+      }
+    },
+    {
+      "id": "E13-objection-after",
+      "kind": "edge",
+      "origin": "蔡尚融's review of #35",
+      "checks": "The sentence after the decision is a teammate's objection, not the team's reason.",
+      "input": "We decided to use PostgreSQL. Bob: I still prefer MongoDB because I know it better.",
+      "expect": {
+        "decision_contains": ["PostgreSQL"],
+        "forbidden_pairs": [["PostgreSQL", "know it better"]],
+        "confidence_at_most": "low"
+      },
+      "known_failure": {
+        "mock": "Keywords cannot tell an objection from a reason; the MOCK attaches it, but with confidence low and a warning (#35)."
+      }
     }
   ]
 }

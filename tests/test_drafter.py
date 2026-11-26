@@ -4,7 +4,14 @@ from streamlit.testing.v1 import AppTest
 from decisiontrace import store
 from decisiontrace.prompt_suite import is_no_decision
 from decisiontrace.cards import UNKNOWN
-from decisiontrace.drafter import MAX_CHARS, MOCK, NO_DECISION, draft_card, split_sentences
+from decisiontrace.drafter import (
+    MAX_CHARS,
+    MOCK,
+    NEXT_SENTENCE_REASON,
+    NO_DECISION,
+    draft_card,
+    split_sentences,
+)
 
 ENGLISH = (
     "Alice: the WebSocket demo dropped again on the school VM.\n"
@@ -20,12 +27,13 @@ def test_english_discussion():
     assert card.reason == "Alice: OK, because WebSockets kept dropping behind the reverse proxy."
     assert card.verbatim_quote == card.reason
     assert card.alternatives == ["WebSockets"]
-    assert card.confidence == "medium"
+    # The reason is the next line, so the reviewer is asked to check it (#35).
+    assert card.confidence == "low"
     assert card.drafted_by == MOCK
     assert card.status == "draft"
     assert card.author == "bob"
     assert card.source == "pasted text"
-    assert card.warnings == []
+    assert card.warnings == [NEXT_SENTENCE_REASON]
 
 
 def test_chinese_discussion():
@@ -104,7 +112,31 @@ def test_reason_in_the_next_sentence_is_kept():
         "alice",
     )
     assert card.reason == "Because WebSockets kept dropping."
+    assert card.confidence == "low"
+    assert NEXT_SENTENCE_REASON in card.warnings
+
+
+def test_reason_in_the_same_sentence_keeps_medium():
+    card = draft_card("We decided to use uv because pip is slow.", "alice")
+    assert card.reason == "We decided to use uv because pip is slow."
     assert card.confidence == "medium"
+    assert card.warnings == []
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "We decided to use PostgreSQL. Lunch was late because the cafe was busy.",
+        "We decided to use PostgreSQL. Bob: I still prefer MongoDB because I know it better.",
+    ],
+)
+def test_unrelated_next_sentence_reason_is_flagged(text):
+    # 蔡尚融's review of #35: keywords cannot tell these apart from a real
+    # reason, so the MOCK attaches them but marks them low with a warning.
+    # The prompt suite (E12, E13) records them as known MOCK failures.
+    card = draft_card(text, "alice")
+    assert card.confidence == "low"
+    assert NEXT_SENTENCE_REASON in card.warnings
 
 
 def test_reason_two_sentences_later_is_not_attached():
@@ -113,7 +145,7 @@ def test_reason_two_sentences_later_is_not_attached():
 
 
 def test_one_decision_gives_no_split_warning():
-    assert draft_card(ENGLISH, "bob").warnings == []
+    assert not any("decisions" in w for w in draft_card(ENGLISH, "bob").warnings)
 
 
 def test_no_decision_found():

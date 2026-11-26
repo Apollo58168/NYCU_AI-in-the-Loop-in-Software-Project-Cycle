@@ -1,4 +1,4 @@
-Drafter: `decisiontrace.drafter:draft_card`. Passed 14 of 15.
+Drafter: `decisiontrace.drafter:draft_card`. Passed 14 of 17.
 
 | Case | Kind | Result | What was wrong |
 | --- | --- | --- | --- |
@@ -17,3 +17,5 @@ Drafter: `decisiontrace.drafter:draft_card`. Passed 14 of 15.
 | E7-prompt-injection | edge | pass |  |
 | E8-too-long | edge | pass |  |
 | E9-empty | edge | pass |  |
+| E12-unrelated-reason-after | edge | FAIL | reason 'Lunch was late because the cafe was busy.' does not support the PostgreSQL decision |
+| E13-objection-after | edge | FAIL | reason 'Bob: I still prefer MongoDB because I know it better.' does not support the PostgreSQL decision |
