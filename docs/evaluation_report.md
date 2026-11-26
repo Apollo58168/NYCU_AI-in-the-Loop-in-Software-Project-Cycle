@@ -29,7 +29,7 @@ None of the five CP1 pass/fail criteria has been tested yet. The prototype runs 
 
 **User testing with two students outside the team (P1, P2, 2026-11-25).** Both are 4th-year Computer Science students; each ran the app from the README (branch `c-ask-sources`, #29) with the sample history and did five tasks. Details are in `docs/design_rationale.md`.
 - **Reviewer gate (criterion 5).** Both rejected the card whose reason belonged to a different decision (PostgreSQL decision, React reason), and both checked the quote against the decision before trusting a card. This is the check `check_quote` cannot make. It was one planted card each, so it shows the gate can work, not how often reviewers catch such cards.
-- **Ask.** Both hit two matching bugs: "What do we use to track bugs?" cited the unrelated polling card (shared word "use"), and a long Chinese question found nothing. Both are fixed in #29 (1091788) and kept as test cases.
+- **Ask.** Both hit two matching bugs: "What do we use to track bugs?" cited the unrelated polling card (shared word "use"), and a long Chinese question found nothing. Both are fixed in #29 (98291db) and kept as test cases.
 - **Not found.** Both read "No approved decision found." as "no such decision", although one card was waiting for review and another had been rejected. Not fixed yet.
 - **Limits.** Two friendly participants, the MOCK drafter, a fixed sample history and no timing: these sessions do not count toward criteria 1–4.
 
