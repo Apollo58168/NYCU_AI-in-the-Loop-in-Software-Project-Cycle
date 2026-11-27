@@ -1,8 +1,9 @@
 """Draft a decision card from pasted text (module D).
 
 This is the MOCK drafter: keyword rules, no AI. It looks for the first
-sentence with a decision marker and the first with a reason marker, and takes
-the quote straight from the text, so the quote is always verbatim. Module D's
+sentence with a decision marker and a reason marker in that sentence or the
+next one, and takes the quote straight from the text, so the quote is always
+verbatim. Module D's
 second PR replaces the body with a Claude API call behind the same signature.
 """
 
@@ -52,11 +53,29 @@ _DECISION = _marker_pattern(DECISION_MARKERS)
 _REASON = _marker_pattern(REASON_MARKERS)
 
 
-def _first_with(sentences: list[str], pattern: re.Pattern[str]) -> str | None:
-    for sentence in sentences:
-        if pattern.search(sentence):
-            return sentence
-    return None
+NEXT_SENTENCE_REASON = (
+    "The reason comes from the sentence after the decision; check that it is "
+    "about this decision."
+)
+
+
+def _reason_for(sentences: list[str], index: int) -> tuple[str | None, bool]:
+    """The reason for the decision at `index`, and whether it is the next sentence.
+
+    Only the decision sentence itself, or the sentence right after it, can
+    hold the reason. The next sentence counts only if it does not state a
+    decision of its own, so a reason for another decision, or a "because"
+    earlier in the text, is never attached to this one (#17). Keywords cannot
+    tell whether the next sentence is really about the decision ("Lunch was
+    late because..."), so the caller lowers confidence and warns.
+    """
+    if _REASON.search(sentences[index]):
+        return sentences[index], False
+    if index + 1 < len(sentences):
+        following = sentences[index + 1]
+        if _REASON.search(following) and not _DECISION.search(following):
+            return following, True
+    return None, False
 
 
 def _alternatives(text: str) -> list[str]:
@@ -73,7 +92,11 @@ def draft_card(source_text: str, author: str, source: str = "pasted text") -> Ca
 
     Raises ValueError for empty text. Text longer than MAX_CHARS is cut and the
     card gets a warning. With no decision marker the decision is UNKNOWN, the card
-    has low confidence and a NO_DECISION warning; review() will not approve it. check_quote() always runs last.
+    has low confidence and a NO_DECISION warning; review() will not approve it.
+    The reason comes only from the decision's own sentence (confidence
+    medium) or the one right after it (confidence low, with a warning); more
+    than one decision adds a warning. check_quote() always runs
+    last.
     """
     text = (source_text or "").strip()
     if not text:
@@ -88,8 +111,16 @@ def draft_card(source_text: str, author: str, source: str = "pasted text") -> Ca
         )
 
     sentences = split_sentences(text)
-    decision = _first_with(sentences, _DECISION)
-    reason = _first_with(sentences, _REASON)
+    decision_indexes = [i for i, s in enumerate(sentences) if _DECISION.search(s)]
+    decision = sentences[decision_indexes[0]] if decision_indexes else None
+    reason, from_next = _reason_for(sentences, decision_indexes[0]) if decision_indexes else (None, False)
+    if from_next:
+        warnings.append(NEXT_SENTENCE_REASON)
+    if len(decision_indexes) > 1:
+        warnings.append(
+            f"The text states {len(decision_indexes)} decisions; only the first was "
+            "drafted. Paste one discussion per decision."
+        )
 
     if decision is None:
         warnings.append(NO_DECISION)
@@ -110,7 +141,7 @@ def draft_card(source_text: str, author: str, source: str = "pasted text") -> Ca
             reason=reason or UNKNOWN,
             verbatim_quote=reason or decision,
             alternatives=_alternatives(text),
-            confidence="medium" if reason else "low",
+            confidence="medium" if reason and not from_next else "low",
             source=source,
             author=author,
             drafted_by=MOCK,

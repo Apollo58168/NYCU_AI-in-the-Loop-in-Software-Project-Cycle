@@ -4,7 +4,14 @@ from streamlit.testing.v1 import AppTest
 from decisiontrace import store
 from decisiontrace.prompt_suite import is_no_decision
 from decisiontrace.cards import UNKNOWN
-from decisiontrace.drafter import MAX_CHARS, MOCK, NO_DECISION, draft_card, split_sentences
+from decisiontrace.drafter import (
+    MAX_CHARS,
+    MOCK,
+    NEXT_SENTENCE_REASON,
+    NO_DECISION,
+    draft_card,
+    split_sentences,
+)
 
 ENGLISH = (
     "Alice: the WebSocket demo dropped again on the school VM.\n"
@@ -20,12 +27,13 @@ def test_english_discussion():
     assert card.reason == "Alice: OK, because WebSockets kept dropping behind the reverse proxy."
     assert card.verbatim_quote == card.reason
     assert card.alternatives == ["WebSockets"]
-    assert card.confidence == "medium"
+    # The reason is the next line, so the reviewer is asked to check it (#35).
+    assert card.confidence == "low"
     assert card.drafted_by == MOCK
     assert card.status == "draft"
     assert card.author == "bob"
     assert card.source == "pasted text"
-    assert card.warnings == []
+    assert card.warnings == [NEXT_SENTENCE_REASON]
 
 
 def test_chinese_discussion():
@@ -74,6 +82,70 @@ def test_whole_word_markers_still_match_next_to_punctuation():
     card = draft_card("Decided: we'll use uv, since it is fast.", "alice")
     assert card.decision == "Decided: we'll use uv, since it is fast."
     assert card.reason == card.decision
+
+
+def test_reason_of_another_decision_is_not_attached():
+    # Group 11 review F1, first example (#17).
+    card = draft_card(
+        "We decided to use PostgreSQL. We decided to use React because the team knows it.",
+        "alice",
+    )
+    assert card.decision == "We decided to use PostgreSQL."
+    assert card.reason == UNKNOWN
+    assert card.verbatim_quote == card.decision
+    assert card.confidence == "low"
+    assert any("2 decisions" in w for w in card.warnings)
+
+
+def test_reason_before_the_decision_is_not_attached():
+    # Group 11 review F1, second example (#17).
+    card = draft_card("Lunch was late because the cafe was busy. We decided to use PostgreSQL.", "alice")
+    assert card.decision == "We decided to use PostgreSQL."
+    assert card.reason == UNKNOWN
+    assert "cafe" not in card.verbatim_quote
+    assert card.confidence == "low"
+
+
+def test_reason_in_the_next_sentence_is_kept():
+    card = draft_card(
+        "We decided to use polling instead of WebSockets. Because WebSockets kept dropping.",
+        "alice",
+    )
+    assert card.reason == "Because WebSockets kept dropping."
+    assert card.confidence == "low"
+    assert NEXT_SENTENCE_REASON in card.warnings
+
+
+def test_reason_in_the_same_sentence_keeps_medium():
+    card = draft_card("We decided to use uv because pip is slow.", "alice")
+    assert card.reason == "We decided to use uv because pip is slow."
+    assert card.confidence == "medium"
+    assert card.warnings == []
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "We decided to use PostgreSQL. Lunch was late because the cafe was busy.",
+        "We decided to use PostgreSQL. Bob: I still prefer MongoDB because I know it better.",
+    ],
+)
+def test_unrelated_next_sentence_reason_is_flagged(text):
+    # 蔡尚融's review of #35: keywords cannot tell these apart from a real
+    # reason, so the MOCK attaches them but marks them low with a warning.
+    # The prompt suite (E12, E13) records them as known MOCK failures.
+    card = draft_card(text, "alice")
+    assert card.confidence == "low"
+    assert NEXT_SENTENCE_REASON in card.warnings
+
+
+def test_reason_two_sentences_later_is_not_attached():
+    card = draft_card("We decided to use uv. The lab is on Monday. Since pip is slow.", "alice")
+    assert card.reason == UNKNOWN
+
+
+def test_one_decision_gives_no_split_warning():
+    assert not any("decisions" in w for w in draft_card(ENGLISH, "bob").warnings)
 
 
 def test_no_decision_found():

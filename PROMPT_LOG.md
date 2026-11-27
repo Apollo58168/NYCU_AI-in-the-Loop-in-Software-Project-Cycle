@@ -89,3 +89,13 @@
 - **What I changed:** The no-decision card now uses `decision = UNKNOWN` with the old text as a warning, so `review()` checks a value, not an error string. It does not change the shared `Card` contract.
 - **Human decision and reason:** The guard lives in `review()` as well as the Draft tab, so a no-decision card that is already saved (or arrives from another caller) still cannot be approved.
 - **Repository result:** see the PR for #18 and #19.
+
+## 2026-11-25 — Reason only from the decision's own sentence (module D, #17)
+
+- **Tool and model:** Claude Code (Claude Opus 5.5)
+- **Prompt summary:** I asked Claude Code to fix issue #17 (Group 11 review F1): the MOCK drafter must not attach a reason from another sentence, must warn when the text has more than one decision, and the prompt suite's E1/E2 cases must pass.
+- **Output:** `_reason_for()` and the multi-decision warning in `decisiontrace/drafter.py`, five tests in `tests/test_drafter.py`, the `known_failure` notes for E1/E2 removed from `tests/prompt_suite/cases.json`, run 3 of the prompt suite, and a "Revision cycle 2" section in `docs/prompt_test_suite.md`.
+- **What I retained:** All of it, after reading the diff and running the tests (96 passed, 1 xfailed for T3). To check that the tests can fail, I put back "first reason sentence anywhere" and five tests failed.
+- **What I changed:** The issue says "same sentence only". That would break the suite's T1/T2 cases and the walking-skeleton demo, where the reason is the next sentence ("…instead of WebSockets. Because WebSockets kept dropping…"). So the next sentence is also allowed, but only when it states no decision of its own.
+- **Human decision and reason:** The rule stays narrow (own sentence or the next one) so that an unrelated "because" elsewhere in a long thread is never attached; a missing reason becomes `unknown`, which our CP1 criterion prefers to an unsupported one. After 蔡尚融's review, a reason from the next sentence gets confidence `low` and a warning, because keywords cannot tell it from an unrelated "because" (E12, E13 added as known MOCK failures).
+- **Repository result:** [PR #35 — Reason only from the decision's own sentence](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/35)
