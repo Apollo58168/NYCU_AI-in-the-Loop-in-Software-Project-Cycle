@@ -6,6 +6,7 @@ built in parallel without editing the same file.
 
 import streamlit as st
 
+import sidebar
 import tab_ask
 import tab_cards
 import tab_draft
@@ -14,6 +15,7 @@ import tab_review
 st.set_page_config(page_title="DecisionTrace", layout="wide")
 st.title("DecisionTrace")
 st.caption("Draft decision cards from team discussions; a teammate reviews every card.")
+sidebar.render()
 
 draft, review, ask, cards = st.tabs(["Draft", "Review", "Ask", "Approved cards"])
 with draft:
