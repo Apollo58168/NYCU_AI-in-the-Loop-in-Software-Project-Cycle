@@ -86,6 +86,12 @@
 
 **Next handover:** 蔡凱旭 → 蔡尚融 at the end of 11/26.
 
+## 2026-11-25 — Ask matching changed after user testing
+**What:** In Ask, the word "use" is ignored, and a question of four or more keywords needs at least two keywords in common with a card (#29, 98291db). This replaces the rule that a card must share a third of the question's keywords.  
+**Why:** In the user-testing sessions (P1, P2; `docs/design_rationale.md`), "What do we use to track bugs?" cited the unrelated polling card only because both contain "use", and the long Chinese question "為什麼即時看板用 polling，不用 WebSockets？" found nothing, because a Chinese sentence turns into many character pairs and the real match fell below a third. The new rule still rejects the earlier false match, where only "server" was shared.  
+**Alternative rejected:** Matching with embeddings or Claude, which needs the API key from #21 and a new evaluation; keeping the one-third rule, which fails on Chinese.  
+**Led by:** 周廷威
+
 ## 2026-11-26 — Steward handover: 蔡凱旭 → 蔡尚融
 **What:** 蔡凱旭 hands the code steward role to 蔡尚融 at the end of the 11/26 turn. 蔡尚融 is steward on 11/27 (merge day). Recorded by 蔡尚融 from the PR history; times are Taiwan time.  
 **Done in 蔡凱旭's turn:**
