@@ -17,7 +17,7 @@ uv installs the right Python version and every dependency into `.venv/` inside t
 2. Clone the repository and install the dependencies:
 
    ```sh
-   git clone git@github.com:Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle.git
+   git clone https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle.git
    cd NYCU_AI-in-the-Loop-in-Software-Project-Cycle
    uv sync
    ```
