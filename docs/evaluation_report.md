@@ -14,7 +14,7 @@ None of the five CP1 pass/fail criteria has been tested yet. The prototype runs 
 | 2 | DecisionTrace group ≥ 80% correct on the 2 scored questions, no lower than manual | **Not tested** | No retrieval study yet. |
 | 3 | DecisionTrace median time ≥ 30% lower, and full separation of participant medians | **Not tested** | No retrieval study yet. |
 | 4 | Reviewers approve or edit ≥ 60% of AI cards, median ≤ 2 min per card | **Not tested** | Every card a person has reviewed so far (Group 11, P1, P2) came from the MOCK, so its acceptance rate says nothing about Claude's drafts. Review time is not recorded yet (no `reviewed_at`). |
-| 5 | No approved card has a reason its sources do not support (hard rule) | **Risk found, partly guarded** | See "What we have tested". The MOCK attached a verbatim but unrelated reason (Group 11, #16 F1); #35 narrows this, but an unrelated "because" right after the decision still gets through, marked confidence `low` with a warning. Claude passed these cases in the prompt suite. A reviewer can still approve such a card. |
+| 5 | No approved card has a reason its sources do not support (hard rule) | **Risk found, partly guarded** | See "What we have tested". The MOCK attached a verbatim but unrelated reason (Group 11, #16 F1); #35 narrows this, but an unrelated "because" right after the decision still gets through, marked confidence `low` with a warning. Claude passed these cases in the prompt suite (19/19 in run 7; only E1, E2, E10 and E11 were repeated), which is not evidence that it never attaches an unrelated reason. A reviewer can still approve such a card. |
 
 ## What we have tested
 
@@ -25,7 +25,7 @@ None of the five CP1 pass/fail criteria has been tested yet. The prototype runs 
 - **No-decision cards could be approved (F2).** Chit-chat produced a card that a reviewer could approve into the decision log. Fixed in #26 (#18): such a card cannot be saved or approved.
 - **Alternatives included the reason text (F3).** Not fixed in the MOCK. The sentence is a prompt-suite case.
 - **Next step unclear after Reject (F4).** Fixed in #26 (#19).
-- **What held:** a card's author could not approve it, rejected cards never reached Ask, and the MOCK label was visible in every tab.
+- **What held:** a card's author could not approve it, rejected cards never reached Ask, and the MOCK label was visible in the Draft, Review and Approved cards tabs.
 
 **User testing with two students outside the team (P1, P2, 2026-11-25).** Both are 4th-year Computer Science students; each ran the app from the README (branch `c-ask-sources`, #29) with the sample history and did five tasks. Details are in `docs/design_rationale.md`.
 - **Reviewer gate (criterion 5).** Both rejected the card whose reason belonged to a different decision (PostgreSQL decision, React reason), and both checked the quote against the decision before trusting a card. This is the check `check_quote` cannot make. It was one planted card each, so it shows the gate can work, not how often reviewers catch such cards.
@@ -44,7 +44,7 @@ None of the five CP1 pass/fail criteria has been tested yet. The prototype runs 
 | Any criterion with Claude-drafted cards | Claude is connected (#36), but only the prompt suite has run on it | Run the review task with Claude-drafted cards in Phase 3 |
 | Retrieval study (criteria 1–3) | No ground truth, no participants | Commit the ground truth and the 3 questions before any card is drafted (CP1 §4), then recruit ≥ 6 students outside the team in Phase 3 |
 | Review cost (criterion 4) | No review timestamps | Record `reviewed_at` (module B) before the review task |
-| Unsupported-reason audit (criterion 5) | No approved cards from a real artifact set | Two members audit every approved card, as in CP1 §4; the inputs from #16 F1 stay in the prompt suite as a regression check |
+| Unsupported-reason audit (criterion 5) | No approved cards from a real artifact set. `check_quote` only checks that the quote is verbatim, so a Claude card whose quote does not support its reason also passes | Two members audit every approved card, as in CP1 §4; the inputs from #16 F1 stay in the prompt suite as a regression check |
 | Users outside the team | Two sessions done (P1, P2), but with the MOCK, a fixed sample history and no timing | In Phase 3 (CP3), with Claude connected (#36): 周廷威 repeats the same tasks with Claude-drafted cards as part of the retrieval study above. P1 and P2 are not counted among its ≥ 6 participants, because they have already seen the sample cards. |
 
 ## What this changes for Phase 3
