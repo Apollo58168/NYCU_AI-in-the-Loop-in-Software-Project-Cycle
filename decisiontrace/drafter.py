@@ -1,16 +1,17 @@
 """Draft a decision card from pasted text (module D).
 
-This is the MOCK drafter: keyword rules, no AI. It looks for the first
+With ANTHROPIC_API_KEY set, Claude drafts the card (see llm.py). Without a
+key, the MOCK drafter runs: keyword rules, no AI. It looks for the first
 sentence with a decision marker and a reason marker in that sentence or the
 next one, and takes the quote straight from the text, so the quote is always
-verbatim. Module D's
-second PR replaces the body with a Claude API call behind the same signature.
+verbatim. Both go through the same card building and check_quote().
 """
 
 from __future__ import annotations
 
 import re
 
+from . import llm
 from .cards import UNKNOWN, Card, check_quote
 
 MOCK = "mock"
@@ -87,16 +88,85 @@ def _alternatives(text: str) -> list[str]:
     return found
 
 
+def _mock_fields(text: str, warnings: list[str]) -> dict:
+    """The card fields the keyword rules find in `text`."""
+    sentences = split_sentences(text)
+    decision_indexes = [i for i, s in enumerate(sentences) if _DECISION.search(s)]
+    if not decision_indexes:
+        return {
+            "decision": UNKNOWN,
+            "reason": UNKNOWN,
+            "verbatim_quote": UNKNOWN,
+            "alternatives": [],
+            "confidence": "low",
+        }
+    decision = sentences[decision_indexes[0]]
+    reason, from_next = _reason_for(sentences, decision_indexes[0])
+    if from_next:
+        warnings.append(NEXT_SENTENCE_REASON)
+    if len(decision_indexes) > 1:
+        warnings.append(
+            f"The text states {len(decision_indexes)} decisions; only the first was "
+            "drafted. Paste one discussion per decision."
+        )
+    return {
+        "decision": decision,
+        "reason": reason or UNKNOWN,
+        "verbatim_quote": reason or decision,
+        "alternatives": _alternatives(text),
+        "confidence": "medium" if reason and not from_next else "low",
+    }
+
+
+def _is_unknown(value: str) -> bool:
+    # Claude may write "Unknown" or "UNKNOWN"; all of them mean the field is empty.
+    return value.strip().casefold() == UNKNOWN
+
+
+def _to_card(fields: dict, author: str, source: str, drafted_by: str, warnings: list[str]) -> Card:
+    """Build the card the same way for the MOCK and for Claude."""
+    fields = {
+        **fields,
+        **{k: UNKNOWN for k in ("decision", "reason", "verbatim_quote") if _is_unknown(fields[k])},
+    }
+    if fields["decision"] == UNKNOWN:
+        # The form from #26: review() refuses to approve a card whose decision is UNKNOWN.
+        warnings.append(NO_DECISION)
+        return Card(
+            decision=UNKNOWN,
+            reason=UNKNOWN,
+            verbatim_quote=UNKNOWN,
+            alternatives=[],
+            confidence="low",
+            source=source,
+            author=author,
+            drafted_by=drafted_by,
+            warnings=warnings,
+        )
+    # A card without a stated reason is never more than low confidence.
+    confidence = "low" if fields["reason"] == UNKNOWN else fields["confidence"]
+    return Card(
+        decision=fields["decision"],
+        reason=fields["reason"],
+        verbatim_quote=fields["verbatim_quote"],
+        alternatives=fields["alternatives"],
+        confidence=confidence,
+        source=source,
+        author=author,
+        drafted_by=drafted_by,
+        warnings=warnings,
+    )
+
+
 def draft_card(source_text: str, author: str, source: str = "pasted text") -> Card:
     """Return a draft card for the discussion in `source_text`.
 
-    Raises ValueError for empty text. Text longer than MAX_CHARS is cut and the
-    card gets a warning. With no decision marker the decision is UNKNOWN, the card
-    has low confidence and a NO_DECISION warning; review() will not approve it.
-    The reason comes only from the decision's own sentence (confidence
-    medium) or the one right after it (confidence low, with a warning); more
-    than one decision adds a warning. check_quote() always runs
-    last.
+    Raises ValueError for empty text, and llm.DraftError when Claude is set up
+    but fails (timeout, rate limit, invalid answer); then no card is made.
+    Text longer than MAX_CHARS is cut and the card gets a warning. With no
+    decision the decision is UNKNOWN, the card has low confidence and a
+    NO_DECISION warning; review() will not approve it. More than one decision
+    adds a warning. check_quote() always runs last.
     """
     text = (source_text or "").strip()
     if not text:
@@ -110,41 +180,30 @@ def draft_card(source_text: str, author: str, source: str = "pasted text") -> Ca
             f"{MAX_CHARS} were used."
         )
 
-    sentences = split_sentences(text)
-    decision_indexes = [i for i, s in enumerate(sentences) if _DECISION.search(s)]
-    decision = sentences[decision_indexes[0]] if decision_indexes else None
-    reason, from_next = _reason_for(sentences, decision_indexes[0]) if decision_indexes else (None, False)
-    if from_next:
-        warnings.append(NEXT_SENTENCE_REASON)
-    if len(decision_indexes) > 1:
-        warnings.append(
-            f"The text states {len(decision_indexes)} decisions; only the first was "
-            "drafted. Paste one discussion per decision."
-        )
-
-    if decision is None:
-        warnings.append(NO_DECISION)
-        card = Card(
-            decision=UNKNOWN,
-            reason=UNKNOWN,
-            verbatim_quote=UNKNOWN,
-            alternatives=[],
-            confidence="low",
-            source=source,
-            author=author,
-            drafted_by=MOCK,
-            warnings=warnings,
-        )
+    if llm.is_configured():
+        fields, drafted_by = llm.draft_fields(text)
+        if fields.pop("more_decisions"):
+            warnings.append(
+                "The text states more than one decision; only the first was "
+                "drafted. Paste one discussion per decision."
+            )
     else:
-        card = Card(
-            decision=decision,
-            reason=reason or UNKNOWN,
-            verbatim_quote=reason or decision,
-            alternatives=_alternatives(text),
-            confidence="medium" if reason and not from_next else "low",
-            source=source,
-            author=author,
-            drafted_by=MOCK,
-            warnings=warnings,
+        fields, drafted_by = _mock_fields(text, warnings), MOCK
+    card = check_quote(_to_card(fields, author, source, drafted_by, warnings), text)
+    return _drop_unsupported_reason(card)
+
+
+def _drop_unsupported_reason(card: Card) -> Card:
+    """A reason whose quote is not in the text has no support, so it goes too.
+
+    The MOCK's reason is its quote, but Claude writes the reason in its own
+    words; without this, an invented reason could survive check_quote() and be
+    approved (CP1 §4: no approved card may have an unsupported reason).
+    """
+    if card.verbatim_quote == UNKNOWN and card.reason != UNKNOWN:
+        card.reason = UNKNOWN
+        card.confidence = "low"
+        card.warnings.append(
+            "The reason was removed because no quote from the source supports it."
         )
-    return check_quote(card, text)
+    return card
