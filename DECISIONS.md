@@ -129,7 +129,8 @@
 
 **Conflicts we expect** (trial merge of all seven PRs in this order on top of `main` at e2689ed, on 11/27):
 
-> - Only `README.md`, when #36 goes in: #29 adds two rows (`app/sidebar.py`, `decisiontrace/sample_data.py`) and the "Try it in five steps" section after the prompt-suite row of the Code layout table, and #36 adds one row (drafter / llm / prompt) at the same place. Keep all three rows, with no blank line between them: #36's row, then sidebar, then sample_data, then the five steps. 蔡凱旭 merges `main` into `d-claude-drafter`, resolves it, runs the tests and pushes before #36 is merged.
+> - `DECISIONS.md`, when #32 goes in after this merge plan: both add an entry at the end of the file (found by 周廷威 in the review of #37; my trial merge started from `main` without the merge plan). 周廷威 rebases #32 before the session and keeps date order: #32's 2026-11-25 entry goes before the 2026-11-26 handover. #30 still merges cleanly, because it inserts in the middle of the file.
+> - `README.md`, when #36 goes in: #29 adds two rows (`app/sidebar.py`, `decisiontrace/sample_data.py`) and the "Try it in five steps" section after the prompt-suite row of the Code layout table, and #36 adds one row (drafter / llm / prompt) at the same place. Keep all three rows, with no blank line between them: #36's row, then sidebar, then sample_data, then the five steps. 蔡凱旭 merges `main` into `d-claude-drafter`, resolves it, runs the tests and pushes before #36 is merged.
 > - `PROMPT_LOG.md` merges cleanly every time, but 37d14fa once lost two entries in a conflict, so check `grep -c '^## ' PROMPT_LOG.md` after each merge: 6 now, then 7 after #29, 9 after #34, 10 after #35 and 12 after #36.
 > - Result after all seven: `uv run pytest` 155 passed, 4 xfailed; MOCK prompt suite 15 of 19 (T3, E11, E12, E13 are the known MOCK failures).
 
