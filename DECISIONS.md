@@ -32,6 +32,12 @@
 
 **Next handover:** 周廷威 → 蔡凱旭 on 11/26.
 
+## 2026-11-23 — Walking skeleton fakes the drafter with a keyword MOCK
+**What:** In the walking-skeleton session the AI step is a keyword-rule MOCK drafter, labelled "MOCK draft, not AI" in every tab. It keeps the real `draft_card(source_text, author, source)` signature, so module D's PR 2 (#21) can put Claude behind it without changing the other tabs.  
+**Why:** The session was about the four pieces connecting. The Claude API key had not been granted yet, and waiting for it would have blocked Review, Ask and Approved cards.  
+**Alternative rejected:** Waiting for the API key before connecting the pieces.  
+**Led by:** whole team, in the session (decision section of #13). Recorded here late, on 2026-11-25, with `docs/walking_skeleton.md`.
+
 ## 2026-11-24 — Three AI usage rules become checkable from a PR
 **What:** Three rules in `AI_GUIDELINES.md` now name what a teammate can see in a PR:
 - the "AI assistance" section lists the tool and model, the generated files, the instruction and what the author changed;
