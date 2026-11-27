@@ -4,7 +4,7 @@ Status: interim, 2026-11-25. Plan: CP1 §4, which replaced the Week 3 `EVALUATIO
 
 ## Summary
 
-None of the five CP1 pass/fail criteria has been tested yet. The prototype runs end to end, but card drafting is still a keyword MOCK (Claude is connected in #21). No participant study has been run, and no ground truth has been committed. So far we have evidence about **safety rules** (who can approve what, and that quotes are verbatim). We have no evidence yet about **effect** (speed, accuracy, acceptance).
+None of the five CP1 pass/fail criteria has been tested yet. The prototype runs end to end, but card drafting is still a keyword MOCK (Claude is connected in #21). The CP1 participant study has not been run, and no ground truth has been committed; two shorter user-testing sessions with students outside the team have (see below). So far we have evidence about **safety rules** (who can approve what, and that quotes are verbatim). We have no evidence yet about **effect** (speed, accuracy, acceptance).
 
 ## CP1 §4 criteria
 
@@ -27,6 +27,12 @@ None of the five CP1 pass/fail criteria has been tested yet. The prototype runs 
 - **Next step unclear after Reject (F4).** Fix in #26 (open, #19).
 - **What held:** a card's author could not approve it, rejected cards never reached Ask, and the MOCK label was visible in every tab.
 
+**User testing with two students outside the team (P1, P2, 2026-11-25).** Both are 4th-year Computer Science students; each ran the app from the README (branch `c-ask-sources`, #29) with the sample history and did five tasks. Details are in `docs/design_rationale.md`.
+- **Reviewer gate (criterion 5).** Both rejected the card whose reason belonged to a different decision (PostgreSQL decision, React reason), and both checked the quote against the decision before trusting a card. This is the check `check_quote` cannot make. It was one planted card each, so it shows the gate can work, not how often reviewers catch such cards.
+- **Ask.** Both hit two matching bugs: "What do we use to track bugs?" cited the unrelated polling card (shared word "use"), and a long Chinese question found nothing. Both are fixed in #29 (98291db) and kept as test cases.
+- **Not found.** Both read "No approved decision found." as "no such decision", although one card was waiting for review and another had been rejected. Not fixed yet.
+- **Limits.** Two friendly participants, the MOCK drafter, a fixed sample history and no timing: these sessions do not count toward criteria 1–4.
+
 **Prompt test suite (module A PR 2, #25, open).** 15 cases, run against the MOCK: 10/15 on the first run, 12/15 after fixing marker matching. The 3 that still fail are F1 ×2 (#17) and F3. The cases check key words and rules rather than exact text, so the same suite will run against the Claude drafter from #21.
 
 ## What we have not tested, and when we will
@@ -37,7 +43,7 @@ None of the five CP1 pass/fail criteria has been tested yet. The prototype runs 
 | Retrieval study (criteria 1–3) | No ground truth, no participants | Commit the ground truth and the 3 questions before any card is drafted (CP1 §4), then recruit ≥ 6 students outside the team in Phase 3 |
 | Review cost (criterion 4) | No review timestamps | Record `reviewed_at` (module B) before the review task |
 | Unsupported-reason audit (criterion 5) | No approved cards from a real artifact set | Two members audit every approved card, as in CP1 §4; the inputs from #16 F1 stay in the prompt suite as a regression check |
-| Users outside the team | Design-rationale user tests are not done yet | At least two sessions before CP2 (design rationale owner: 周廷威) |
+| Users outside the team | Two sessions done (P1, P2), but with the MOCK, a fixed sample history and no timing | In Phase 3 (CP3), after #21 connects Claude: 周廷威 repeats the same tasks with Claude-drafted cards as part of the retrieval study above. P1 and P2 are not counted among its ≥ 6 participants, because they have already seen the sample cards. |
 
 ## What this changes for Phase 3
 
