@@ -49,3 +49,15 @@ Cards are stored in `data/cards.json`, which is not committed. Delete that file 
 | `app/tab_cards.py` | Approved cards tab | A |
 | `decisiontrace/prompt_suite.py`, `tests/prompt_suite/cases.json` | Prompt test suite for the drafter (`uv run python -m decisiontrace.prompt_suite`) | A |
 | `decisiontrace/drafter.py`, `decisiontrace/llm.py`, `prompts/draft_card.md` | Drafter: MOCK without a key, Claude with one; the system prompt ([prompt card](docs/PROMPT_CARD.md)) | D |
+| `app/sidebar.py` | Load sample data / reset data | C |
+| `decisiontrace/sample_data.py` | The fixed sample team history | C |
+
+## Try it in five steps
+
+Two people (or one person playing both) can do the whole loop in about five minutes:
+
+1. In the sidebar, press **Load sample data**. It replaces any saved cards with a small team history: four approved decisions, one rejected card and one draft.
+2. **Ask** tab: ask `Why do we use polling?`. The answer cites the approved card with its quote. Then ask `Did we switch to server-sent events?`: that card was rejected, so the answer is "No approved decision found."
+3. **Draft** tab: enter your name as the author, open **Sample discussion to paste in the Draft tab** in the sidebar, paste the text, press **Draft card**, then **Save as draft**.
+4. **Review** tab: the second person enters a different name and approves or rejects the card. The author cannot review their own card.
+5. **Approved cards** tab: approved decisions are listed newest first. To start over, tick the confirmation box in the sidebar and press **Reset data**.

@@ -1,6 +1,6 @@
 # Decisions Log
 
-**Current code steward:** 蔡凱旭 ([**chrisouo**](https://github.com/chrisouo), @chrisouo), since 2026-11-26 (see the entry *2026-11-25 — Steward handover: 周廷威 → 蔡凱旭* below).
+**Current code steward:** 蔡尚融 ([**shangjung1012**](https://github.com/shangjung1012), @shangjung1012), since 2026-11-27 (see the entry *2026-11-26 — Steward handover: 蔡凱旭 → 蔡尚融* below).
 
 ## 2026-09-21 — Initial code steward
 **What:** [**Apollo**](https://github.com/Apollo58168) is the initial code steward for the team.  
@@ -85,3 +85,72 @@
 - This handover PR itself, which 周廷威 cannot merge.
 
 **Next handover:** 蔡凱旭 → 蔡尚融 at the end of 11/26.
+
+## 2026-11-25 — Ask matching changed after user testing
+**What:** In Ask, the word "use" is ignored, and a question of four or more keywords needs at least two keywords in common with a card (#29, 98291db). This replaces the rule that a card must share a third of the question's keywords.  
+**Why:** In the user-testing sessions (P1, P2; `docs/design_rationale.md`), "What do we use to track bugs?" cited the unrelated polling card only because both contain "use", and the long Chinese question "為什麼即時看板用 polling，不用 WebSockets？" found nothing, because a Chinese sentence turns into many character pairs and the real match fell below a third. The new rule still rejects the earlier false match, where only "server" was shared.  
+**Alternative rejected:** Matching with embeddings or Claude, which needs the API key from #21 and a new evaluation; keeping the one-third rule, which fails on Chinese.  
+**Led by:** 周廷威
+
+## 2026-11-26 — Steward handover: 蔡凱旭 → 蔡尚融
+**What:** 蔡凱旭 hands the code steward role to 蔡尚融 at the end of the 11/26 turn. 蔡尚融 is steward on 11/27 (merge day). Recorded by 蔡尚融 from the PR history; times are Taiwan time.  
+**Done in 蔡凱旭's turn:**
+- Merged #25 (prompt test suite) and #31 (handover 周廷威 → 蔡凱旭) on 11/26. Both were approved on 11/25 with a question: on #25, whether `alternatives` should use keyword matching like decision and reason (蔡尚融 answered to keep it strict); on #31, whether the entry should link #34–#36 (周廷威 answered to keep it as it stood on 11/25).
+- Merged #26 (#18, #19) on 11/26, after checking 林彥宇's follow-up commit a59a811, which was the answer to his 11/25 question about cards saved with the old "No decision found" text.
+- #29: approved on 11/25 with a question about replaced decisions in `rank()`; 周廷威 answered in d9baeb8 (cited cards show their draft date), and 蔡凱旭 checked it on 11/26. 周廷威 rebased #29 onto `main` in 210f059 late on 11/26; it was not merged in this turn.
+- Approved #32 and #33 on 11/25; not merged in this turn (both wait for #29).
+- Opened #34 (#14), #35 (#17) and #36 (#21) on 11/25, and marked #35 and #36 ready for review on 11/26, as #27 asked.
+- `uv run pytest` on `main` after the merges: not recorded.
+
+**Handed over:**
+- #29 → #32 → #33: approved by 蔡凱旭, to merge in that order on merge day.
+- #34 (#14) and #35 (#17): steward approval with a substantive comment, then merge (as #27 lists for 11/27).
+- #30 (walking-skeleton worksheet, 蔡尚融): approved by 林彥宇 on 11/25; the steward merges it.
+- #36 (#21, Claude drafter): planned for 11/28 in #27; see the merge plan below.
+- The merge plan below, and this handover entry.
+
+**Next handover:** 蔡尚融 → 林彥宇 at the end of 11/27.
+
+## 2026-11-27 — Merge plan (steward: 蔡尚融)
+**Open PRs** (from `gh pr list` on the morning of 11/27):
+
+| # | PR / branch | What it does | Author | Ready? | Touches the same files as… |
+| --- | --- | --- | --- | --- | --- |
+| 1 | #29 `c-ask-sources` | Cited ranked answers, sample data, five-step demo in the README | 周廷威 | yes (approved by 蔡凱旭; rebased in 210f059) | README.md: #36; PROMPT_LOG.md: #34, #35, #36 |
+| 2 | #32 `docs/design-rationale` | Design rationale with two user-testing sessions | 周廷威 | yes (approved by 蔡凱旭 on 11/25; new commits on 11/27, read them on screen before merging) | DECISIONS.md: #30 |
+| 3 | #33 `docs/eval-user-testing` | User-testing results in the evaluation report | 周廷威 | yes (approved by 蔡凱旭 on 11/25; new commits on 11/27, read them on screen before merging) | `docs/evaluation_report.md` only |
+| 4 | #30 `docs/walking-skeleton-worksheet` | Walking-skeleton worksheet | 蔡尚融 | yes (approved by 林彥宇) | DECISIONS.md: #32 |
+| 5 | #34 `fix/14-restore-prompt-log` | Restore the module C and D entries in PROMPT_LOG.md (Closes #14) | 蔡凱旭 | yes, needs the steward approval | PROMPT_LOG.md: #29, #35, #36 |
+| 6 | #35 `fix/17-reason-same-decision` | Reason only from the decision's sentence or the next one (Closes #17) | 蔡凱旭 | yes, needs the steward approval | drafter.py, test_drafter.py, cases.json: #36 |
+| 7 | #36 `d-claude-drafter` | Claude drafter, MOCK without a key (#21) | 蔡凱旭 | yes, needs a non-author approval | README.md: #29; drafter.py and more: #35 (#36 contains #35's commits) |
+
+**Merge order and why:** #29 → #32 → #33 → #30 → #34 → #35 → #36.
+
+> 1. #29 first: #32 and #33 cite its commits (for example 98291db), so it goes in before the documents that describe it.
+> 2. #32, #33 and #30: documents only.
+> 3. #34: PROMPT_LOG.md only; it inserts in the middle of the file.
+> 4. #35, then #36: #36 is built on #35's drafter and contains its commits, so it goes last.
+
+#36 moves from 11/28 (#27) to today, because it is ready and the trial merge below passes; this leaves 11/28–29 as a buffer.
+
+**Conflicts we expect** (trial merge of all seven PRs in this order on top of `main` at e2689ed, on 11/27):
+
+> - `DECISIONS.md`, when #32 goes in after this merge plan: both add an entry at the end of the file (found by 周廷威 in the review of #37; my trial merge started from `main` without the merge plan). 周廷威 rebases #32 before the session and keeps date order: #32's 2026-11-25 entry goes before the 2026-11-26 handover. #30 still merges cleanly, because it inserts in the middle of the file.
+> - `README.md`, when #36 goes in: #29 adds two rows (`app/sidebar.py`, `decisiontrace/sample_data.py`) and the "Try it in five steps" section after the prompt-suite row of the Code layout table, and #36 adds one row (drafter / llm / prompt) at the same place. Keep all three rows, with no blank line between them: #36's row, then sidebar, then sample_data, then the five steps. 蔡凱旭 merges `main` into `d-claude-drafter`, resolves it, runs the tests and pushes before #36 is merged.
+> - `PROMPT_LOG.md` merges cleanly every time, but 37d14fa once lost two entries in a conflict, so check `grep -c '^## ' PROMPT_LOG.md` after each merge: 6 now, then 7 after #29, 9 after #34, 10 after #35 and 12 after #36.
+> - Result after all seven: `uv run pytest` 155 passed, 4 xfailed; MOCK prompt suite 15 of 19 (T3, E11, E12, E13 are the known MOCK failures).
+
+**Who drives each merge** (at least three drivers):
+
+| PR | Driver | Approval |
+| --- | --- | --- |
+| #29, #32, #33 | 蔡凱旭 | 蔡凱旭 (11/25) |
+| #30 | 蔡尚融 | 林彥宇 (11/25) |
+| #34, #35 | 蔡尚融 | 蔡尚融 (steward), with a substantive comment |
+| #36 | 林彥宇 | 林彥宇, with a substantive comment |
+
+**What "done" means today:** every open PR is merged or closed with a reason; `uv run pytest` passes on `main` after each merge; and someone other than the steward (林彥宇) clones `main` into a new folder and, following only the README, does the main task with no API key: Draft → Review → Ask, with the card in Approved cards.
+
+**PRs we will close without merging:** none.
+
+**Outcome:**
