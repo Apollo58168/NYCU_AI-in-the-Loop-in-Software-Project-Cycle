@@ -1,6 +1,6 @@
 # Decisions Log
 
-**Current code steward:** 蔡尚融 ([**shangjung1012**](https://github.com/shangjung1012), @shangjung1012), since 2026-11-27 (see the entry *2026-11-26 — Steward handover: 蔡凱旭 → 蔡尚融* below).
+**Current code steward:** 林彥宇 ([**Apollo58168**](https://github.com/Apollo58168), @Apollo58168), since 2026-11-28 (see the entry *2026-11-28 — Steward handover: 蔡尚融 → 林彥宇* below).
 
 ## 2026-09-21 — Initial code steward
 **What:** [**Apollo**](https://github.com/Apollo58168) is the initial code steward for the team.  
@@ -184,7 +184,7 @@ Left for after merge day: README clone URL to HTTPS (林彥宇, small PR on 11/2
 - #41 (evaluation report after merge day, 周廷威): commented that "MOCK label visible in every tab" was still there and that the criterion 5 cell should say how many cases were repeated. 周廷威 changed both in aedb140. Approved and merged on 11/28 at 02:21. This also covers the #28 wording that 林彥宇 had promised to fix.
 - #42 (README clones with the HTTPS URL, 林彥宇): approved by 周廷威, who checked that the URL works without credentials. Merged on 11/28 at 02:22.
 - #43 (`CLAUDE.md`, 蔡凱旭): checked its "How it fails" claims against `main`, and checked that changing one word of `prompts/draft_card.md` fails the drift test. Suggested adding that only four cases were repeated. Approved and merged on 11/28 at 17:06.
-- #40 (merge-day outcome and `docs/merge_day.md`, 蔡尚融): asked for the Outcome to say that the fresh-clone test was run with Claude Code. 蔡尚融 changed it in b83f444, and 林彥宇 approved; 蔡尚融 merges it.
+- #40 (merge-day outcome and `docs/merge_day.md`, 蔡尚融): asked for the Outcome to say that the fresh-clone test was run with Claude Code. 蔡尚融 changed it in b83f444; approved and merged by 林彥宇 on 11/28 at 17:11.
 - Final check of `main` on a fresh HTTPS clone at 4864a55, with no API key:
   - `uv run pytest`: 156 passed, 4 xfailed.
   - MOCK prompt suite: 15 of 19 (T3, E11, E12, E13 are the known failures).
