@@ -119,3 +119,13 @@
 - **What I changed:** E11 gets a `known_failure.mock` note, because the keyword MOCK cannot see that "switched to" replaces a decision; it stays visible as a strict xfail.
 - **Human decision and reason:** A card that presents a replaced decision as current is exactly the misleading record CP1 warns about, so the card should hold the decision that stands, and the warning still tells the reviewer that the text had more than one. The whole cycle cost about US$0.3 of the course key. After rebasing on #26 and #35, run 7 passed 19 of 19, including 蔡尚融's E12 and E13.
 - **Repository result:** [PR #36 — Claude drafter behind draft_card](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/36)
+
+## 2026-11-28 — CLAUDE.md for the AI integration (module D, CP2)
+
+- **Tool and model:** Claude Code (Claude Opus 5.5)
+- **Prompt summary:** I asked Claude Code to write the `CLAUDE.md` that CP2 asks for ("a new engineer can see what the AI does, what it was told to do and how it fails"), based on the CP2 page, the prompt card and the merged code.
+- **Output:** `CLAUDE.md` at the repository root (what the AI does, the system prompt, how it fails, how to work in the repo), `tests/test_claude_md.py`, a README link, and two corrections in `docs/PROMPT_CARD.md`.
+- **What I retained:** All of it, after reading it against the code and running `uv run pytest` (156 passed, 4 xfailed). Changing one word of the copied prompt makes the new test fail.
+- **What I changed:** The system prompt is copied into `CLAUDE.md` instead of only linked, because CP2 grades the file as the system prompt; the test keeps the copy identical to `prompts/draft_card.md`, which the code sends. The prompt card's "draft only the first decision" row still described the rule from before E11, so it was corrected.
+- **Human decision and reason:** One short file that points to the prompt card for details, so the two documents do not repeat each other and drift.
+- **Repository result:** [PR #43 — CLAUDE.md describing the AI integration](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/43)

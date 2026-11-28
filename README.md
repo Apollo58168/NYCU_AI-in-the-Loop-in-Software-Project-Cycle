@@ -4,6 +4,7 @@
 - [Evaluation Plan](EVALUATION_PLAN.md)
 - [Prompt Engineering Log](PROMPT_LOG.md)
 - [Prompt Test Suite](docs/prompt_test_suite.md)
+- [CLAUDE.md: the AI in DecisionTrace](CLAUDE.md) and its [prompt card](docs/PROMPT_CARD.md)
 
 **Current status (2026-11-26):** Draft can use Claude, but no API key is needed to run the app. Without `ANTHROPIC_API_KEY` the Draft tab uses the keyword MOCK (`decisiontrace/drafter.py`), and every card says which one drafted it. To use Claude, copy `.env.example` to `.env` and fill in the key (the `.env` file is never committed). With Claude, the prompt test suite passes 19 of 19 cases ([run 7](docs/prompt_suite_results/run7_claude_after_rebase.md)). Ask uses keyword matching (`decisiontrace/ask.py`).
 
