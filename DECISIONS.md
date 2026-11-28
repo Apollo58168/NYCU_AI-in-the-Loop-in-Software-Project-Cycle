@@ -159,4 +159,19 @@
 
 **PRs we will close without merging:** none.
 
-**Outcome:**
+**Outcome (2026-11-27 to 11-28):** merged all seven open PRs and closed none: #29, #32, #33 (driven by 蔡凱旭), #30, #34, #35 (蔡尚融) and #36 (approved and merged by 林彥宇, 11/28 00:17). #34 and #35 closed #14 and #17. The merge plan itself went in first as #37.
+
+Conflicts, and how they were resolved:
+- `DECISIONS.md`, #32 after #37: both added an entry at the end. Found by 周廷威 in the review of #37 (the steward's trial merge had started from `main` without #37). 周廷威 rebased #32 in date order before it was merged.
+- `README.md`, #36 after #29: as planned. 蔡凱旭 merged `main` into `d-claude-drafter` (6d3d161) and kept all three Code layout rows in the plan's order.
+- #36 after #35: GitHub marked #36 as conflicting, but merging `main` (e629316) into it locally was clean, with 155 passed, 4 xfailed. #36 already contained #35's commits and had `main` merged in, so the two branches had two merge bases (35af3c8 and 26b412a). 蔡凱旭 merged `main` into the branch again (f8adce2); GitHub then showed it as mergeable, with only #36's 18 files in the diff.
+
+`main` after each merge (`uv run pytest`; `grep -c '^## ' PROMPT_LOG.md`): after #33, 116 passed, 3 xfailed, 7 entries; after #30, the same; after #34, 116 passed, 3 xfailed, 9 entries; after #35, 126 passed, 3 xfailed, 10 entries; after #36, 155 passed, 4 xfailed, 12 entries. The app started on `main` after #33, #30, #34 and #35. After #29 and #32: not recorded separately (蔡凱旭 trial-merged each one locally before merging).
+
+Fresh-clone test by 林彥宇 (run with Claude Code, see `docs/merge_day.md`) at af98de2, right after #36 merged, with no API key (MOCK): worked. `uv sync` OK, 155 passed, 4 xfailed, and all five README steps worked in the browser (details in `docs/merge_day.md`). README's clone command uses the SSH URL, so someone without an SSH key would stop there; the run used HTTPS. The run with an API key was not done.
+
+`main` is green: 155 passed, 4 xfailed; MOCK prompt suite 15 of 19 (T3, E11, E12, E13 are the known MOCK failures).
+
+Absent: nobody. All four took part, in an online meeting.
+
+Left for after merge day: README clone URL to HTTPS (林彥宇, small PR on 11/28); #38 (MOCK puts the speaker's name in the decision; 蔡凱旭, due 12/7) and #39 (the sample discussion repeats the s-poll decision; 周廷威, due 12/7), from the fresh-clone test notes; a Draft run with an API key on a fresh clone.
