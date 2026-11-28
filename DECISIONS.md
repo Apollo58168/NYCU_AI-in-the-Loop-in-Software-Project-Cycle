@@ -168,7 +168,7 @@ Conflicts, and how they were resolved:
 
 `main` after each merge (`uv run pytest`; `grep -c '^## ' PROMPT_LOG.md`): after #33, 116 passed, 3 xfailed, 7 entries; after #30, the same; after #34, 116 passed, 3 xfailed, 9 entries; after #35, 126 passed, 3 xfailed, 10 entries; after #36, 155 passed, 4 xfailed, 12 entries. The app started on `main` after #33, #30, #34 and #35. After #29 and #32: not recorded separately (蔡凱旭 trial-merged each one locally before merging).
 
-Fresh-clone test by 林彥宇 at af98de2, right after #36 merged, with no API key (MOCK): worked. `uv sync` OK, 155 passed, 4 xfailed, and all five README steps worked in the browser (details in `docs/merge_day.md`). README's clone command uses the SSH URL, so someone without an SSH key would stop there; the run used HTTPS. The run with an API key was not done.
+Fresh-clone test by 林彥宇 (run with Claude Code, see `docs/merge_day.md`) at af98de2, right after #36 merged, with no API key (MOCK): worked. `uv sync` OK, 155 passed, 4 xfailed, and all five README steps worked in the browser (details in `docs/merge_day.md`). README's clone command uses the SSH URL, so someone without an SSH key would stop there; the run used HTTPS. The run with an API key was not done.
 
 `main` is green: 155 passed, 4 xfailed; MOCK prompt suite 15 of 19 (T3, E11, E12, E13 are the known MOCK failures).
 
