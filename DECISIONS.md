@@ -175,3 +175,25 @@ Fresh-clone test by 林彥宇 (run with Claude Code, see `docs/merge_day.md`) at
 Absent: nobody. All four took part, in an online meeting.
 
 Left for after merge day: README clone URL to HTTPS (林彥宇, small PR on 11/28); #38 (MOCK puts the speaker's name in the decision; 蔡凱旭, due 12/7) and #39 (the sample discussion repeats the s-poll decision; 周廷威, due 12/7), from the fresh-clone test notes; a Draft run with an API key on a fresh clone.
+
+## 2026-11-28 — Steward handover: 蔡尚融 → 林彥宇
+**What:** 蔡尚融 hands the code steward role to 林彥宇 at the end of merge day, after #36 was merged (11/28 00:17) and the fresh-clone test was done. 林彥宇 is steward on 11/28–29, until CP2 is handed in, as #27 planned. Recorded by 林彥宇 from the PR history; times are Taiwan time.  
+**Taken over:** merge day is recorded under the 2026-11-27 merge plan above (#40). From that turn: #40 itself, the README clone URL (林彥宇), #38 and #39 (Phase 3), and the follow-up PRs for the evaluation report and `CLAUDE.md`.
+
+**Done in 林彥宇's turn:**
+- #41 (evaluation report after merge day, 周廷威): commented that "MOCK label visible in every tab" was still there and that the criterion 5 cell should say how many cases were repeated. 周廷威 changed both in aedb140. Approved and merged on 11/28 at 02:21. This also covers the #28 wording that 林彥宇 had promised to fix.
+- #42 (README clones with the HTTPS URL, 林彥宇): approved by 周廷威, who checked that the URL works without credentials. Merged on 11/28 at 02:22.
+- #43 (`CLAUDE.md`, 蔡凱旭): checked its "How it fails" claims against `main`, and checked that changing one word of `prompts/draft_card.md` fails the drift test. Suggested adding that only four cases were repeated. Approved and merged on 11/28 at 17:06.
+- #40 (merge-day outcome and `docs/merge_day.md`, 蔡尚融): asked for the Outcome to say that the fresh-clone test was run with Claude Code. 蔡尚融 changed it in b83f444, and 林彥宇 approved; 蔡尚融 merges it.
+- Final check of `main` on a fresh HTTPS clone at 4864a55, with no API key:
+  - `uv run pytest`: 156 passed, 4 xfailed.
+  - MOCK prompt suite: 15 of 19 (T3, E11, E12, E13 are the known failures).
+  - The app starts.
+  - No `.env`, `data/cards.json` or API key is committed.
+
+**Left after CP2:**
+- [#38](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/issues/38) (蔡凱旭) and [#39](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/issues/39) (周廷威), both due 12/7.
+- Optional: in `CLAUDE.md`, add "only four cases repeated" next to "run 7 passed 19 of 19" (suggested in #43).
+- A Draft run with an API key on a fresh clone (not done on merge day).
+
+**Next handover:** the Phase 3 steward schedule is not decided yet; the team agrees it after CP2.
