@@ -128,4 +128,4 @@
 - **What I retained:** All of it, after reading it against the code and running `uv run pytest` (156 passed, 4 xfailed). Changing one word of the copied prompt makes the new test fail.
 - **What I changed:** The system prompt is copied into `CLAUDE.md` instead of only linked, because CP2 grades the file as the system prompt; the test keeps the copy identical to `prompts/draft_card.md`, which the code sends. The prompt card's "draft only the first decision" row still described the rule from before E11, so it was corrected.
 - **Human decision and reason:** One short file that points to the prompt card for details, so the two documents do not repeat each other and drift.
-- **Repository result:** PR link added after the PR is opened.
+- **Repository result:** [PR #43 — CLAUDE.md describing the AI integration](https://github.com/Apollo58168/NYCU_AI-in-the-Loop-in-Software-Project-Cycle/pull/43)
